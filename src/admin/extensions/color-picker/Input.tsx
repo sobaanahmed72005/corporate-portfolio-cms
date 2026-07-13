@@ -5,8 +5,7 @@ interface ColorPickerInputProps {
   disabled?: boolean;
   error?: string;
   hint?: React.ReactNode;
-  intlLabel: { id: string; defaultMessage: string };
-  labelAction?: React.ReactNode;
+  label?: string;
   name: string;
   onChange: (event: { target: { name: string; value: string; type?: string } }) => void;
   required?: boolean;
@@ -19,13 +18,17 @@ const FALLBACK = '#000000';
 // full gradient + eyedropper on Chrome/Edge) — no numbers to type, no new
 // dependency. This is the Input half of the `global::color` custom field
 // registered in src/index.ts and src/admin/app.tsx.
+//
+// At render time the content-manager passes a plain `label` string (from
+// the field's configured/default label), not the `intlLabel` object used
+// only at registration time for the content-type builder's field picker.
 const ColorPickerInput = React.forwardRef<HTMLInputElement, ColorPickerInputProps>(
-  ({ disabled, error, hint, intlLabel, labelAction, name, onChange, required, value }, ref) => {
+  ({ disabled, error, hint, label, name, onChange, required, value }, ref) => {
     const current = value || FALLBACK;
 
     return (
       <Field.Root name={name} id={name} error={error} hint={hint} required={required}>
-        <Field.Label action={labelAction}>{intlLabel.defaultMessage}</Field.Label>
+        <Field.Label>{label}</Field.Label>
         <input
           ref={ref}
           type="color"
