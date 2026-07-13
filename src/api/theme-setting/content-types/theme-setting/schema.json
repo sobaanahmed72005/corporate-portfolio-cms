@@ -1,0 +1,34 @@
+{
+  "kind": "singleType",
+  "collectionName": "theme_settings",
+  "info": {
+    "singularName": "theme-setting",
+    "pluralName": "theme-settings",
+    "displayName": "Theme Setting",
+    "description": "Site-wide brand colors. Editing and publishing here recolors the live site within ~60 seconds — no code change needed."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "brandColor": {
+      "type": "string",
+      "required": true,
+      "default": "#0324FF",
+      "description": "Primary brand color (hex, e.g. #0324FF) — used for buttons, links, nav highlights"
+    },
+    "accentColor": {
+      "type": "string",
+      "required": true,
+      "default": "#FFA31A",
+      "description": "Accent color (hex, e.g. #FFA31A) — used for secondary CTAs and highlights"
+    },
+    "inkColor": {
+      "type": "string",
+      "required": true,
+      "default": "#000000",
+      "description": "Near-black UI color (hex, e.g. #000000) — used for dark buttons, footer, dark text"
+    }
+  }
+}

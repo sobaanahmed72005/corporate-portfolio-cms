@@ -648,5 +648,18 @@ export default {
     await seedIfEmpty('api::stat.stat', stats, 'stats');
     await seedIfEmpty('api::course.course', courses, 'courses');
     await seedIfEmpty('api::client-logo.client-logo', clientLogos, 'client logos');
+
+    // Single type — seed the one entry with today's actual live colors, so
+    // nothing changes visually until the user edits it themselves.
+    const existingTheme = await strapi.documents('api::theme-setting.theme-setting').findFirst();
+    if (!existingTheme) {
+      await strapi.documents('api::theme-setting.theme-setting').create({
+        data: { brandColor: '#0324FF', accentColor: '#FFA31A', inkColor: '#000000' },
+        status: 'published',
+      });
+      strapi.log.info('[seed] theme setting: created');
+    } else {
+      strapi.log.info('[seed] theme setting: already present, skipping');
+    }
   },
 };
