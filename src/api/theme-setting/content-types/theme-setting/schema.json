@@ -14,21 +14,24 @@
   "attributes": {
     "brandColor": {
       "type": "string",
+      "customField": "global::color",
       "required": true,
       "default": "#0324FF",
-      "description": "Primary brand color (hex, e.g. #0324FF) — used for buttons, links, nav highlights"
+      "description": "Primary brand color — used for buttons, links, nav highlights"
     },
     "accentColor": {
       "type": "string",
+      "customField": "global::color",
       "required": true,
       "default": "#FFA31A",
-      "description": "Accent color (hex, e.g. #FFA31A) — used for secondary CTAs and highlights"
+      "description": "Accent color — used for secondary CTAs and highlights"
     },
     "inkColor": {
       "type": "string",
+      "customField": "global::color",
       "required": true,
       "default": "#000000",
-      "description": "Near-black UI color (hex, e.g. #000000) — used for dark buttons, footer, dark text"
+      "description": "Near-black UI color — used for dark buttons, footer, dark text"
     }
   }
 }

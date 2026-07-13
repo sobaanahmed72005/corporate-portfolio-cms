@@ -841,15 +841,18 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
   attributes: {
     accentColor: Schema.Attribute.String &
       Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
       Schema.Attribute.DefaultTo<'#FFA31A'>;
     brandColor: Schema.Attribute.String &
       Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
       Schema.Attribute.DefaultTo<'#0324FF'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     inkColor: Schema.Attribute.String &
       Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
       Schema.Attribute.DefaultTo<'#000000'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<

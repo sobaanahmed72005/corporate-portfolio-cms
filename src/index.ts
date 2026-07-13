@@ -569,7 +569,15 @@ const clientLogos = Array.from({ length: 10 }, (_, i) => ({
 }));
 
 export default {
-  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+  register({ strapi }: { strapi: Core.Strapi }) {
+    // Backs the `global::color` custom field used on theme-setting so the
+    // admin panel shows a real color-swatch picker instead of a text box.
+    strapi.customFields.register({
+      name: 'color',
+      type: 'string',
+      inputSize: { default: 4, isResizable: true },
+    });
+  },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     const seedIfEmpty = async (
