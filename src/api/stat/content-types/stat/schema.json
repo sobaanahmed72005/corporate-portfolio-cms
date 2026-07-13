@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stats",
+  "info": {
+    "singularName": "stat",
+    "pluralName": "stats",
+    "displayName": "Stat",
+    "description": "Home page stat counters, e.g. \"29+ Years of Experience\""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "description": "e.g. \"Years of Experience\""
+    },
+    "value": {
+      "type": "integer",
+      "required": true
+    },
+    "suffix": {
+      "type": "string",
+      "required": false,
+      "default": "+",
+      "description": "e.g. \"+\" or \"K+\""
+    }
+  }
+}

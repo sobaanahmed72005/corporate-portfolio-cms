@@ -530,6 +530,44 @@ const portfolioCategories = [
   },
 ];
 
+// PLACEHOLDER — "Years of Experience" was previously computed from
+// company.foundingYear on the frontend; snapshotted here as a plain editable
+// number per the user's request. "Brands & Manufacturers" and "Projects
+// Completed" were already placeholders. Edit all three directly from now on.
+const stats = [
+  { label: 'Years of Experience', value: 2, suffix: '+' },
+  { label: 'Brands & Manufacturers', value: 15, suffix: '+' },
+  { label: 'Projects Completed', value: 500, suffix: '+' },
+];
+
+const courses = [
+  {
+    slug: 'cctv-installation-certification',
+    name: 'CCTV Installation Certification',
+    description: 'Camera placement, cabling, and NVR/DVR setup for installers.',
+    icon: 'camera',
+    gradient: 'rose',
+  },
+  {
+    slug: 'solar-system-design',
+    name: 'Solar System Design',
+    description: 'Load assessment and sizing for grid-tie and hybrid systems.',
+    icon: 'sun',
+    gradient: 'orange',
+  },
+  {
+    slug: 'networking-fundamentals',
+    name: 'Networking Fundamentals',
+    description: 'Structured cabling, routing, and WiFi coverage planning.',
+    icon: 'network',
+    gradient: 'purple',
+  },
+];
+
+const clientLogos = Array.from({ length: 10 }, (_, i) => ({
+  alt: `Client logo placeholder ${i + 1}`,
+}));
+
 export default {
   register(/* { strapi }: { strapi: Core.Strapi } */) {},
 
@@ -537,6 +575,9 @@ export default {
     const seedIfEmpty = async (
       uid:
         | 'api::product-category.product-category'
+        | 'api::stat.stat'
+        | 'api::course.course'
+        | 'api::client-logo.client-logo'
         | 'api::service.service'
         | 'api::blog-post.blog-post'
         | 'api::testimonial.testimonial'
@@ -603,5 +644,9 @@ export default {
     } else {
       strapi.log.info(`[seed] portfolio categories: ${existingPortfolioCategories} already present, skipping`);
     }
+
+    await seedIfEmpty('api::stat.stat', stats, 'stats');
+    await seedIfEmpty('api::course.course', courses, 'courses');
+    await seedIfEmpty('api::client-logo.client-logo', clientLogos, 'client logos');
   },
 };

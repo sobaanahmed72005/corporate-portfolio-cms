@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "client_logos",
+  "info": {
+    "singularName": "client-logo",
+    "pluralName": "client-logos",
+    "displayName": "Client Logo",
+    "description": "\"Trusted by\" logo wall entries. Only use a logo you have permission to display."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "alt": {
+      "type": "string",
+      "required": true,
+      "description": "Alt text / client name"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "Falls back to an empty slot when unset — never use a logo without permission"
+    }
+  }
+}
