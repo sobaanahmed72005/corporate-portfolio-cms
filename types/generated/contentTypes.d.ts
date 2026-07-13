@@ -830,7 +830,7 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
 export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
   collectionName: 'theme_settings';
   info: {
-    description: 'Site-wide brand colors. Editing and publishing here recolors the live site within ~60 seconds \u2014 no code change needed.';
+    description: 'Site-wide theme: colors, fonts, shape/shadow style, logo & favicon. Editing and publishing here updates the live site within ~60 seconds \u2014 no code change needed.';
     displayName: 'Theme Setting';
     pluralName: 'theme-settings';
     singularName: 'theme-setting';
@@ -850,6 +850,17 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    favicon: Schema.Attribute.Media<'images'>;
+    fontPairing: Schema.Attribute.Enumeration<
+      [
+        'Modern Sans (Outfit + Rubik)',
+        'Editorial Serif (Playfair Display + Source Sans 3)',
+        'Technical Grotesk (Space Grotesk + Inter)',
+        'Classic Corporate (Merriweather + Inter)',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Modern Sans (Outfit + Rubik)'>;
     inkColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
@@ -860,7 +871,26 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
       'api::theme-setting.theme-setting'
     > &
       Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
+    radiusStyle: Schema.Attribute.Enumeration<
+      [
+        'Sharp (minimal rounding)',
+        'Soft (current default)',
+        'Rounded (pill-like)',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Soft (current default)'>;
+    shadowStyle: Schema.Attribute.Enumeration<
+      [
+        'Flat (minimal shadow)',
+        'Subtle (current default)',
+        'Bold (pronounced depth)',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Subtle (current default)'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

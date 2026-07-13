@@ -5,7 +5,7 @@
     "singularName": "theme-setting",
     "pluralName": "theme-settings",
     "displayName": "Theme Setting",
-    "description": "Site-wide brand colors. Editing and publishing here recolors the live site within ~60 seconds — no code change needed."
+    "description": "Site-wide theme: colors, fonts, shape/shadow style, logo & favicon. Editing and publishing here updates the live site within ~60 seconds — no code change needed."
   },
   "options": {
     "draftAndPublish": true
@@ -32,6 +32,54 @@
       "required": true,
       "default": "#000000",
       "description": "Near-black UI color — used for dark buttons, footer, dark text"
+    },
+    "fontPairing": {
+      "type": "enumeration",
+      "enum": [
+        "Modern Sans (Outfit + Rubik)",
+        "Editorial Serif (Playfair Display + Source Sans 3)",
+        "Technical Grotesk (Space Grotesk + Inter)",
+        "Classic Corporate (Merriweather + Inter)"
+      ],
+      "default": "Modern Sans (Outfit + Rubik)",
+      "required": true,
+      "description": "Heading + body font pairing used across the whole site"
+    },
+    "radiusStyle": {
+      "type": "enumeration",
+      "enum": [
+        "Sharp (minimal rounding)",
+        "Soft (current default)",
+        "Rounded (pill-like)"
+      ],
+      "default": "Soft (current default)",
+      "required": true,
+      "description": "Corner roundness for cards, buttons, and chips site-wide"
+    },
+    "shadowStyle": {
+      "type": "enumeration",
+      "enum": [
+        "Flat (minimal shadow)",
+        "Subtle (current default)",
+        "Bold (pronounced depth)"
+      ],
+      "default": "Subtle (current default)",
+      "required": true,
+      "description": "Shadow depth for cards and buttons site-wide"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "Header logo. Falls back to the text badge when unset."
+    },
+    "favicon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "Browser tab icon. Falls back to favicon.ico when unset."
     }
   }
 }

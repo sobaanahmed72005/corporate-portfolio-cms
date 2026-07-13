@@ -657,17 +657,39 @@ export default {
     await seedIfEmpty('api::course.course', courses, 'courses');
     await seedIfEmpty('api::client-logo.client-logo', clientLogos, 'client logos');
 
-    // Single type — seed the one entry with today's actual live colors, so
+    // Single type — seed the one entry with today's actual live look, so
     // nothing changes visually until the user edits it themselves.
     const existingTheme = await strapi.documents('api::theme-setting.theme-setting').findFirst();
     if (!existingTheme) {
       await strapi.documents('api::theme-setting.theme-setting').create({
-        data: { brandColor: '#0324FF', accentColor: '#FFA31A', inkColor: '#000000' },
+        data: {
+          brandColor: '#0324FF',
+          accentColor: '#FFA31A',
+          inkColor: '#000000',
+          fontPairing: 'Modern Sans (Outfit + Rubik)',
+          radiusStyle: 'Soft (current default)',
+          shadowStyle: 'Subtle (current default)',
+        },
         status: 'published',
       });
       strapi.log.info('[seed] theme setting: created');
     } else {
-      strapi.log.info('[seed] theme setting: already present, skipping');
+      // Record predates the fontPairing/radiusStyle/shadowStyle fields —
+      // backfill defaults so the (required) fields aren't left null.
+      const backfill: Record<string, string> = {};
+      if (!existingTheme.fontPairing) backfill.fontPairing = 'Modern Sans (Outfit + Rubik)';
+      if (!existingTheme.radiusStyle) backfill.radiusStyle = 'Soft (current default)';
+      if (!existingTheme.shadowStyle) backfill.shadowStyle = 'Subtle (current default)';
+      if (Object.keys(backfill).length > 0) {
+        await strapi.documents('api::theme-setting.theme-setting').update({
+          documentId: existingTheme.documentId,
+          data: backfill,
+          status: 'published',
+        });
+        strapi.log.info('[seed] theme setting: backfilled new fields on existing record');
+      } else {
+        strapi.log.info('[seed] theme setting: already present, skipping');
+      }
     }
   },
 };
