@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "product_categories",
+  "collectionName": "portfolio_categories",
   "info": {
-    "singularName": "product-category",
-    "pluralName": "product-categories",
-    "displayName": "Product Category",
-    "description": "Groups of related products, e.g. CCTV & Security"
+    "singularName": "portfolio-category",
+    "pluralName": "portfolio-categories",
+    "displayName": "Portfolio Category",
+    "description": "Groups of related past projects, e.g. CCTV Installation Projects"
   },
   "options": {
     "draftAndPublish": true
@@ -21,10 +21,6 @@
       "type": "string",
       "required": true
     },
-    "shortName": {
-      "type": "string",
-      "required": true
-    },
     "description": {
       "type": "text",
       "required": true
@@ -32,12 +28,12 @@
     "icon": {
       "type": "string",
       "required": true,
-      "description": "Key into the frontend's Icon.tsx registry, e.g. \"plug\""
+      "description": "Key into the frontend's Icon.tsx registry, e.g. \"camera\""
     },
     "gradient": {
       "type": "string",
       "required": true,
-      "description": "Key into the frontend's gradients.ts GRADIENTS map, e.g. \"blue\""
+      "description": "Key into the frontend's gradients.ts GRADIENTS map, e.g. \"rose\""
     },
     "image": {
       "type": "media",
@@ -46,10 +42,10 @@
       "allowedTypes": ["images"],
       "description": "Optional real category photo — falls back to the icon badge when unset"
     },
-    "products": {
+    "projects": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::product.product",
+      "target": "api::project.project",
       "mappedBy": "category"
     }
   }

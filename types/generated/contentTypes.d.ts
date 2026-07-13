@@ -511,6 +511,42 @@ export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPortfolioCategoryPortfolioCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'portfolio_categories';
+  info: {
+    description: 'Groups of related past projects, e.g. CCTV Installation Projects';
+    displayName: 'Portfolio Category';
+    pluralName: 'portfolio-categories';
+    singularName: 'portfolio-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    gradient: Schema.Attribute.String & Schema.Attribute.Required;
+    icon: Schema.Attribute.String & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::portfolio-category.portfolio-category'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    projects: Schema.Attribute.Relation<'oneToMany', 'api::project.project'>;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiProductCategoryProductCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'product_categories';
@@ -530,6 +566,7 @@ export interface ApiProductCategoryProductCategory
     description: Schema.Attribute.Text & Schema.Attribute.Required;
     gradient: Schema.Attribute.String & Schema.Attribute.Required;
     icon: Schema.Attribute.String & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -581,6 +618,45 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiProjectProject extends Struct.CollectionTypeSchema {
+  collectionName: 'projects';
+  info: {
+    description: 'Individual past-project case studies shown on the Portfolio page and home page preview';
+    displayName: 'Project';
+    pluralName: 'projects';
+    singularName: 'project';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::portfolio-category.portfolio-category'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    highlight: Schema.Attribute.String & Schema.Attribute.Required;
+    icon: Schema.Attribute.String & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::project.project'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    summary: Schema.Attribute.Text & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    video: Schema.Attribute.Media<'videos'>;
   };
 }
 
@@ -1173,8 +1249,10 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'api::office.office': ApiOfficeOffice;
+      'api::portfolio-category.portfolio-category': ApiPortfolioCategoryPortfolioCategory;
       'api::product-category.product-category': ApiProductCategoryProductCategory;
       'api::product.product': ApiProductProduct;
+      'api::project.project': ApiProjectProject;
       'api::service.service': ApiServiceService;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
       'plugin::content-releases.release': PluginContentReleasesRelease;

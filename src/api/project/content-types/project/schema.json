@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Project",
+    "description": "Individual past-project case studies shown on the Portfolio page and home page preview"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "summary": {
+      "type": "text",
+      "required": true
+    },
+    "highlight": {
+      "type": "string",
+      "required": true,
+      "description": "Short stat/badge shown on the card, e.g. \"4 Branches Connected\""
+    },
+    "icon": {
+      "type": "string",
+      "required": true,
+      "description": "Key into the frontend's Icon.tsx registry"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "Optional real project photo — falls back to the icon badge when unset"
+    },
+    "video": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["videos"],
+      "description": "Optional project walkthrough/demo video — shown instead of or alongside the photo when set"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::portfolio-category.portfolio-category",
+      "inversedBy": "projects"
+    }
+  }
+}
