@@ -742,6 +742,10 @@ export default {
           cardColor: '#000000',
           buttonColor: '#0324FF',
           navHighlightColor: '#0324FF',
+          headerTextColor: '#F7F7F7',
+          footerTextColor: '#F7F7F7',
+          pageTextColor: '#F7F7F7',
+          cardTextColor: '#F7F7F7',
           fontPairing: 'Modern Sans (Outfit + Rubik)',
           radiusStyle: 'Soft (current default)',
           shadowStyle: 'Subtle (current default)',
@@ -750,14 +754,18 @@ export default {
       });
       strapi.log.info('[seed] theme setting: created');
     } else {
-      // Record predates fontPairing/radiusStyle/shadowStyle and the header/
+      // Record predates fontPairing/radiusStyle/shadowStyle, the header/
       // footer/pageBackground/card/button/navHighlight color split (which
-      // replaced the old single inkColor field) — backfill so the
-      // (required) fields aren't left null. header/footer/page/card default
-      // to inkColor's last known live value (#000000, unchanged throughout
-      // this project) since that field no longer exists to read from;
-      // button/navHighlight default to the record's own current brandColor,
-      // so the user's own picked color carries forward as the starting point.
+      // replaced the old single inkColor field), and the header/footer/page/
+      // card TEXT color split (previously auto-derived from the background,
+      // now independently pickable) — backfill so the (required) fields
+      // aren't left null. header/footer/page/card background default to
+      // inkColor's last known live value (#000000, unchanged throughout this
+      // project) since that field no longer exists to read from; the new
+      // text-color fields default to #F7F7F7, the exact shade that was being
+      // auto-derived from #000000 before this split, so nothing visually
+      // changes; button/navHighlight default to the record's own current
+      // brandColor, so the user's own picked color carries forward.
       const backfill: Record<string, string> = {};
       if (!existingTheme.fontPairing) backfill.fontPairing = 'Modern Sans (Outfit + Rubik)';
       if (!existingTheme.radiusStyle) backfill.radiusStyle = 'Soft (current default)';
@@ -768,6 +776,10 @@ export default {
       if (!existingTheme.cardColor) backfill.cardColor = '#000000';
       if (!existingTheme.buttonColor) backfill.buttonColor = existingTheme.brandColor || '#0324FF';
       if (!existingTheme.navHighlightColor) backfill.navHighlightColor = existingTheme.brandColor || '#0324FF';
+      if (!existingTheme.headerTextColor) backfill.headerTextColor = '#F7F7F7';
+      if (!existingTheme.footerTextColor) backfill.footerTextColor = '#F7F7F7';
+      if (!existingTheme.pageTextColor) backfill.pageTextColor = '#F7F7F7';
+      if (!existingTheme.cardTextColor) backfill.cardTextColor = '#F7F7F7';
       if (Object.keys(backfill).length > 0) {
         await strapi.documents('api::theme-setting.theme-setting').update({
           documentId: existingTheme.documentId,

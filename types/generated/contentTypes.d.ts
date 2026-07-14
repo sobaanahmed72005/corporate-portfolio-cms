@@ -867,6 +867,10 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
       Schema.Attribute.DefaultTo<'#000000'>;
+    cardTextColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#F7F7F7'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -885,10 +889,18 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
       Schema.Attribute.DefaultTo<'#000000'>;
+    footerTextColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#F7F7F7'>;
     headerColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
       Schema.Attribute.DefaultTo<'#000000'>;
+    headerTextColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#F7F7F7'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -904,6 +916,10 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
       Schema.Attribute.DefaultTo<'#000000'>;
+    pageTextColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#F7F7F7'>;
     publishedAt: Schema.Attribute.DateTime;
     radiusStyle: Schema.Attribute.Enumeration<
       [

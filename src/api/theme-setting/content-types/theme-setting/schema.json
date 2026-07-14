@@ -68,6 +68,34 @@
       "default": "#0324FF",
       "description": "Color used to highlight whichever page you're currently on in the menu"
     },
+    "headerTextColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#F7F7F7",
+      "description": "Text color in the header bar (menu links, logo text)"
+    },
+    "footerTextColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#F7F7F7",
+      "description": "Text color in the footer (links, contact info)"
+    },
+    "pageTextColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#F7F7F7",
+      "description": "Text color on the dark sections down the middle of your pages (headings, paragraphs)"
+    },
+    "cardTextColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#F7F7F7",
+      "description": "Text color inside cards and boxes on dark sections"
+    },
     "fontPairing": {
       "type": "enumeration",
       "enum": [
