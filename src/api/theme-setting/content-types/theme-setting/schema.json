@@ -5,7 +5,7 @@
     "singularName": "theme-setting",
     "pluralName": "theme-settings",
     "displayName": "Theme Setting",
-    "description": "Site-wide theme: colors, fonts, shape/shadow style, logo & favicon. Editing and publishing here updates the live site within ~60 seconds — no code change needed."
+    "description": "Site-wide theme: colors for each part of the site, fonts, shape/shadow style, logo & favicon. Editing and publishing here updates the live site within ~60 seconds — no code change needed."
   },
   "options": {
     "draftAndPublish": true
@@ -17,7 +17,7 @@
       "customField": "global::color",
       "required": true,
       "default": "#0324FF",
-      "description": "Primary brand color — used for buttons, links, nav highlights"
+      "description": "Background for the highlighted call-to-action banner, your logo badge, and decorative homepage accents"
     },
     "accentColor": {
       "type": "string",
@@ -26,12 +26,47 @@
       "default": "#FFA31A",
       "description": "Accent color — used for secondary CTAs and highlights"
     },
-    "inkColor": {
+    "headerColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
       "default": "#000000",
-      "description": "Near-black UI color — used for dark buttons, footer, dark text"
+      "description": "Background color of the header bar at the top of the site (where your logo and menu are)"
+    },
+    "footerColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#000000",
+      "description": "Background color of the footer at the bottom of the site"
+    },
+    "pageBackgroundColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#000000",
+      "description": "Background color behind the sections down the middle of your pages (hero, stats, highlights, etc.)"
+    },
+    "cardColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#000000",
+      "description": "Tint color for cards and boxes shown on dark sections (testimonials, offices, courses, etc.)"
+    },
+    "buttonColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#0324FF",
+      "description": "Color of the main action buttons across the site (e.g. \"Browse Products\", \"Get a Quote\")"
+    },
+    "navHighlightColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#0324FF",
+      "description": "Color used to highlight whichever page you're currently on in the menu"
     },
     "fontPairing": {
       "type": "enumeration",

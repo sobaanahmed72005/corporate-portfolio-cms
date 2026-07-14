@@ -736,7 +736,12 @@ export default {
         data: {
           brandColor: '#0324FF',
           accentColor: '#FFA31A',
-          inkColor: '#000000',
+          headerColor: '#000000',
+          footerColor: '#000000',
+          pageBackgroundColor: '#000000',
+          cardColor: '#000000',
+          buttonColor: '#0324FF',
+          navHighlightColor: '#0324FF',
           fontPairing: 'Modern Sans (Outfit + Rubik)',
           radiusStyle: 'Soft (current default)',
           shadowStyle: 'Subtle (current default)',
@@ -745,12 +750,24 @@ export default {
       });
       strapi.log.info('[seed] theme setting: created');
     } else {
-      // Record predates the fontPairing/radiusStyle/shadowStyle fields —
-      // backfill defaults so the (required) fields aren't left null.
+      // Record predates fontPairing/radiusStyle/shadowStyle and the header/
+      // footer/pageBackground/card/button/navHighlight color split (which
+      // replaced the old single inkColor field) — backfill so the
+      // (required) fields aren't left null. header/footer/page/card default
+      // to inkColor's last known live value (#000000, unchanged throughout
+      // this project) since that field no longer exists to read from;
+      // button/navHighlight default to the record's own current brandColor,
+      // so the user's own picked color carries forward as the starting point.
       const backfill: Record<string, string> = {};
       if (!existingTheme.fontPairing) backfill.fontPairing = 'Modern Sans (Outfit + Rubik)';
       if (!existingTheme.radiusStyle) backfill.radiusStyle = 'Soft (current default)';
       if (!existingTheme.shadowStyle) backfill.shadowStyle = 'Subtle (current default)';
+      if (!existingTheme.headerColor) backfill.headerColor = '#000000';
+      if (!existingTheme.footerColor) backfill.footerColor = '#000000';
+      if (!existingTheme.pageBackgroundColor) backfill.pageBackgroundColor = '#000000';
+      if (!existingTheme.cardColor) backfill.cardColor = '#000000';
+      if (!existingTheme.buttonColor) backfill.buttonColor = existingTheme.brandColor || '#0324FF';
+      if (!existingTheme.navHighlightColor) backfill.navHighlightColor = existingTheme.brandColor || '#0324FF';
       if (Object.keys(backfill).length > 0) {
         await strapi.documents('api::theme-setting.theme-setting').update({
           documentId: existingTheme.documentId,

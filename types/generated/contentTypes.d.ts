@@ -842,7 +842,7 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
 export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
   collectionName: 'theme_settings';
   info: {
-    description: 'Site-wide theme: colors, fonts, shape/shadow style, logo & favicon. Editing and publishing here updates the live site within ~60 seconds \u2014 no code change needed.';
+    description: 'Site-wide theme: colors for each part of the site, fonts, shape/shadow style, logo & favicon. Editing and publishing here updates the live site within ~60 seconds \u2014 no code change needed.';
     displayName: 'Theme Setting';
     pluralName: 'theme-settings';
     singularName: 'theme-setting';
@@ -859,6 +859,14 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
       Schema.Attribute.DefaultTo<'#0324FF'>;
+    buttonColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#0324FF'>;
+    cardColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#000000'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -873,7 +881,11 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Modern Sans (Outfit + Rubik)'>;
-    inkColor: Schema.Attribute.String &
+    footerColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#000000'>;
+    headerColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
       Schema.Attribute.DefaultTo<'#000000'>;
@@ -884,6 +896,14 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images'>;
+    navHighlightColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#0324FF'>;
+    pageBackgroundColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#000000'>;
     publishedAt: Schema.Attribute.DateTime;
     radiusStyle: Schema.Attribute.Enumeration<
       [
