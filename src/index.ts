@@ -16,7 +16,7 @@ const productCategories = [
     description:
       'Fast chargers, power banks, and charging cables for phones, laptops, and other devices.',
     icon: 'plug',
-    gradient: 'blue',
+    iconColor: '#3B82F6',
     products: [
       {
         slug: 'gan-fast-wall-charger',
@@ -51,7 +51,7 @@ const productCategories = [
     description:
       'Indoor and outdoor security cameras with recording systems for homes and businesses.',
     icon: 'video',
-    gradient: 'rose',
+    iconColor: '#F43F5E',
     products: [
       {
         slug: 'indoor-dome-cameras',
@@ -86,7 +86,7 @@ const productCategories = [
     description:
       'Solar panels, inverters, and batteries for reliable, cost-saving power backup.',
     icon: 'sun',
-    gradient: 'orange',
+    iconColor: '#F97316',
     products: [
       {
         slug: 'monocrystalline-panels',
@@ -120,7 +120,7 @@ const productCategories = [
     shortName: 'Networking',
     description: 'Routers, switches, and cabling equipment to keep your network fast and reliable.',
     icon: 'router',
-    gradient: 'purple',
+    iconColor: '#8B5CF6',
     products: [
       {
         slug: 'routers-access-points',
@@ -163,7 +163,7 @@ const services = [
       'Post-installation support',
     ],
     icon: 'camera',
-    gradient: 'rose',
+    iconColor: '#F43F5E',
   },
   {
     slug: 'solar-installation',
@@ -176,7 +176,7 @@ const services = [
       'Maintenance and troubleshooting',
     ],
     icon: 'sun',
-    gradient: 'orange',
+    iconColor: '#F97316',
   },
   {
     slug: 'networking-setup',
@@ -189,7 +189,7 @@ const services = [
       'Network troubleshooting and support',
     ],
     icon: 'network',
-    gradient: 'purple',
+    iconColor: '#8B5CF6',
   },
   {
     slug: 'bulk-corporate-supply',
@@ -202,7 +202,7 @@ const services = [
       'Dedicated support for corporate accounts',
     ],
     icon: 'package',
-    gradient: 'green',
+    iconColor: '#10B981',
   },
   {
     slug: 'maintenance-support',
@@ -215,7 +215,7 @@ const services = [
       'Priority support for existing customers',
     ],
     icon: 'wrench',
-    gradient: 'cyan',
+    iconColor: '#06B6D4',
   },
 ];
 
@@ -400,7 +400,7 @@ const portfolioCategories = [
     description:
       'Camera systems installed and configured for retail, residential, and warehouse security.',
     icon: 'camera',
-    gradient: 'rose',
+    iconColor: '#F43F5E',
     projects: [
       {
         slug: 'retail-chain-security-rollout',
@@ -433,7 +433,7 @@ const portfolioCategories = [
     name: 'Solar Installation Projects',
     description: 'Solar and backup power systems sized and installed for homes, offices, and off-grid needs.',
     icon: 'sun',
-    gradient: 'orange',
+    iconColor: '#F97316',
     projects: [
       {
         slug: 'hybrid-solar-family-home',
@@ -466,7 +466,7 @@ const portfolioCategories = [
     name: 'Networking & Structured Cabling Projects',
     description: 'Wired and wireless network builds for offices, retail spaces, and multi-floor buildings.',
     icon: 'network',
-    gradient: 'purple',
+    iconColor: '#8B5CF6',
     projects: [
       {
         slug: 'call-center-network-buildout',
@@ -500,7 +500,7 @@ const portfolioCategories = [
     description:
       'Volume sourcing and delivery of IT accessories and equipment for institutional and corporate clients.',
     icon: 'package',
-    gradient: 'green',
+    iconColor: '#10B981',
     projects: [
       {
         slug: 'university-lab-accessories-supply',
@@ -546,21 +546,21 @@ const courses = [
     name: 'CCTV Installation Certification',
     description: 'Camera placement, cabling, and NVR/DVR setup for installers.',
     icon: 'camera',
-    gradient: 'rose',
+    iconColor: '#F43F5E',
   },
   {
     slug: 'solar-system-design',
     name: 'Solar System Design',
     description: 'Load assessment and sizing for grid-tie and hybrid systems.',
     icon: 'sun',
-    gradient: 'orange',
+    iconColor: '#F97316',
   },
   {
     slug: 'networking-fundamentals',
     name: 'Networking Fundamentals',
     description: 'Structured cabling, routing, and WiFi coverage planning.',
     icon: 'network',
-    gradient: 'purple',
+    iconColor: '#8B5CF6',
   },
 ];
 
@@ -604,6 +604,37 @@ export default {
       strapi.log.info(`[seed] ${label}: created ${data.length}`);
     };
 
+    // Existing rows predate iconColor (it replaced the old named `gradient`
+    // field) — backfill using the same colors those names used to map to,
+    // so nothing visually changes until the user picks a new color.
+    const backfillIconColorBySlug = async (
+      uid:
+        | 'api::product-category.product-category'
+        | 'api::service.service'
+        | 'api::portfolio-category.portfolio-category'
+        | 'api::course.course',
+      slugToColor: Record<string, string>,
+      label: string,
+    ) => {
+      const entries = await strapi.documents(uid).findMany({});
+      let backfilled = 0;
+      for (const entry of entries) {
+        const slug = (entry as { slug?: string }).slug;
+        const iconColor = (entry as { iconColor?: string }).iconColor;
+        if (!iconColor && slug && slugToColor[slug]) {
+          await strapi.documents(uid).update({
+            documentId: entry.documentId,
+            data: { iconColor: slugToColor[slug] },
+            status: 'published',
+          });
+          backfilled++;
+        }
+      }
+      if (backfilled > 0) {
+        strapi.log.info(`[seed] ${label}: backfilled iconColor on ${backfilled} existing entries`);
+      }
+    };
+
     // product-category first (product relations point back to it by slug).
     const existingCategories = await strapi.documents('api::product-category.product-category').count({});
     if (existingCategories === 0) {
@@ -623,9 +654,30 @@ export default {
       strapi.log.info(`[seed] product categories + products: created ${productCategories.length} categories`);
     } else {
       strapi.log.info(`[seed] product categories: ${existingCategories} already present, skipping`);
+      await backfillIconColorBySlug(
+        'api::product-category.product-category',
+        {
+          'chargers-power': '#3B82F6',
+          'cctv-security': '#F43F5E',
+          'solar-panels': '#F97316',
+          networking: '#8B5CF6',
+        },
+        'product categories',
+      );
     }
 
     await seedIfEmpty('api::service.service', services, 'services');
+    await backfillIconColorBySlug(
+      'api::service.service',
+      {
+        'cctv-installation': '#F43F5E',
+        'solar-installation': '#F97316',
+        'networking-setup': '#8B5CF6',
+        'bulk-corporate-supply': '#10B981',
+        'maintenance-support': '#06B6D4',
+      },
+      'services',
+    );
     await seedIfEmpty('api::blog-post.blog-post', blogPosts, 'blog posts');
     await seedIfEmpty('api::testimonial.testimonial', testimonials, 'testimonials');
     await seedIfEmpty('api::office.office', offices, 'offices');
@@ -651,10 +703,29 @@ export default {
       strapi.log.info(`[seed] portfolio categories + projects: created ${portfolioCategories.length} categories`);
     } else {
       strapi.log.info(`[seed] portfolio categories: ${existingPortfolioCategories} already present, skipping`);
+      await backfillIconColorBySlug(
+        'api::portfolio-category.portfolio-category',
+        {
+          'cctv-installations': '#F43F5E',
+          'solar-installations': '#F97316',
+          'networking-projects': '#8B5CF6',
+          'bulk-corporate-supply': '#10B981',
+        },
+        'portfolio categories',
+      );
     }
 
     await seedIfEmpty('api::stat.stat', stats, 'stats');
     await seedIfEmpty('api::course.course', courses, 'courses');
+    await backfillIconColorBySlug(
+      'api::course.course',
+      {
+        'cctv-installation-certification': '#F43F5E',
+        'solar-system-design': '#F97316',
+        'networking-fundamentals': '#8B5CF6',
+      },
+      'courses',
+    );
     await seedIfEmpty('api::client-logo.client-logo', clientLogos, 'client logos');
 
     // Single type — seed the one entry with today's actual live look, so

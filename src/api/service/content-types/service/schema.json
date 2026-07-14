@@ -34,9 +34,12 @@
       "type": "string",
       "required": true
     },
-    "gradient": {
+    "iconColor": {
       "type": "string",
-      "required": true
+      "customField": "global::color",
+      "required": true,
+      "default": "#3B82F6",
+      "description": "Icon badge and accent color for this service"
     }
   }
 }

@@ -30,10 +30,12 @@
       "required": true,
       "description": "Key into the frontend's Icon.tsx registry"
     },
-    "gradient": {
+    "iconColor": {
       "type": "string",
+      "customField": "global::color",
       "required": true,
-      "description": "Key into the frontend's gradients.ts GRADIENTS map"
+      "default": "#3B82F6",
+      "description": "Icon badge and accent color for this course"
     }
   }
 }
