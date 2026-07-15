@@ -897,23 +897,23 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     accentColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#FFA31A'>;
+      Schema.Attribute.DefaultTo<'#38BDF8'>;
     brandColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#0324FF'>;
+      Schema.Attribute.DefaultTo<'#2563EB'>;
     buttonColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#0324FF'>;
+      Schema.Attribute.DefaultTo<'#2563EB'>;
     cardColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#000000'>;
+      Schema.Attribute.DefaultTo<'#EFF6FF'>;
     cardTextColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#F7F7F7'>;
+      Schema.Attribute.DefaultTo<'#0F172A'>;
     contentCardColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
@@ -939,19 +939,19 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     footerColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#000000'>;
+      Schema.Attribute.DefaultTo<'#F8FAFC'>;
     footerTextColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#F7F7F7'>;
+      Schema.Attribute.DefaultTo<'#0F172A'>;
     headerColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#000000'>;
+      Schema.Attribute.DefaultTo<'#FFFFFF'>;
     headerTextColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#F7F7F7'>;
+      Schema.Attribute.DefaultTo<'#0F172A'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -962,15 +962,15 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     navHighlightColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#0324FF'>;
+      Schema.Attribute.DefaultTo<'#2563EB'>;
     pageBackgroundColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#000000'>;
+      Schema.Attribute.DefaultTo<'#FFFFFF'>;
     pageTextColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#F7F7F7'>;
+      Schema.Attribute.DefaultTo<'#0F172A'>;
     publishedAt: Schema.Attribute.DateTime;
     radiusStyle: Schema.Attribute.Enumeration<
       [
@@ -984,7 +984,7 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     sectionColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#F8FAFC'>;
+      Schema.Attribute.DefaultTo<'#EFF6FF'>;
     sectionTextColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &

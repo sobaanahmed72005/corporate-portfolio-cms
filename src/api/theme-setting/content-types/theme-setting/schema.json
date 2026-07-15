@@ -16,91 +16,91 @@
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#0324FF",
+      "default": "#2563EB",
       "description": "Background for the highlighted call-to-action banner, your logo badge, and decorative homepage accents"
     },
     "accentColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#FFA31A",
+      "default": "#38BDF8",
       "description": "Accent color — used for secondary CTAs and highlights"
     },
     "headerColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#000000",
+      "default": "#FFFFFF",
       "description": "Background color of the header bar at the top of the site (where your logo and menu are)"
     },
     "footerColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#000000",
+      "default": "#F8FAFC",
       "description": "Background color of the footer at the bottom of the site"
     },
     "pageBackgroundColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#000000",
+      "default": "#FFFFFF",
       "description": "Background color behind the sections down the middle of your pages (hero, stats, highlights, etc.)"
     },
     "cardColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#000000",
+      "default": "#EFF6FF",
       "description": "Tint color for cards and boxes shown on dark sections (testimonials, offices, courses, etc.)"
     },
     "buttonColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#0324FF",
+      "default": "#2563EB",
       "description": "Color of the main action buttons across the site (e.g. \"Browse Products\", \"Get a Quote\")"
     },
     "navHighlightColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#0324FF",
+      "default": "#2563EB",
       "description": "Color used to highlight whichever page you're currently on in the menu"
     },
     "headerTextColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#F7F7F7",
+      "default": "#0F172A",
       "description": "Text color in the header bar (menu links, logo text)"
     },
     "footerTextColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#F7F7F7",
+      "default": "#0F172A",
       "description": "Text color in the footer (links, contact info)"
     },
     "pageTextColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#F7F7F7",
+      "default": "#0F172A",
       "description": "Text color on the dark sections down the middle of your pages (headings, paragraphs)"
     },
     "cardTextColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#F7F7F7",
+      "default": "#0F172A",
       "description": "Text color inside cards and boxes on dark sections"
     },
     "sectionColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#F8FAFC",
+      "default": "#EFF6FF",
       "description": "Background color of the light banner and divider sections on inner pages (About, Contact, Products, Services, Blog, Portfolio, Testimonials, Privacy Policy, Terms)"
     },
     "sectionTextColor": {
