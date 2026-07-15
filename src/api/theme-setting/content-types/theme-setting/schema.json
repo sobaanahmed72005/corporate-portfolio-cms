@@ -131,7 +131,8 @@
         "Editorial Serif (Playfair Display + Source Sans 3)",
         "Technical Grotesk (Space Grotesk + Inter)",
         "Classic Corporate (Merriweather + Inter)",
-        "Single Family — Inter"
+        "Single Family — Inter",
+        "Single Family — Outfit"
       ],
       "default": "Modern Sans (Outfit + Rubik)",
       "required": true,

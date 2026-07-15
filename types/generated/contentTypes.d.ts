@@ -933,6 +933,7 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
         'Technical Grotesk (Space Grotesk + Inter)',
         'Classic Corporate (Merriweather + Inter)',
         'Single Family \u2014 Inter',
+        'Single Family \u2014 Outfit',
       ]
     > &
       Schema.Attribute.Required &
