@@ -5,7 +5,7 @@
     "singularName": "theme-setting",
     "pluralName": "theme-settings",
     "displayName": "Theme Setting",
-    "description": "Site-wide theme: colors for each part of the site, fonts, shape/shadow style, logo & favicon. Editing and publishing here updates the live site within ~60 seconds — no code change needed."
+    "description": "Site-wide theme: colors for every part of the site (dark homepage sections and light inner pages alike), fonts, shape/shadow style, logo & favicon. Editing and publishing here updates the live site within ~60 seconds — no code change needed."
   },
   "options": {
     "draftAndPublish": true
@@ -95,6 +95,34 @@
       "required": true,
       "default": "#F7F7F7",
       "description": "Text color inside cards and boxes on dark sections"
+    },
+    "sectionColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#F8FAFC",
+      "description": "Background color of the light banner and divider sections on inner pages (About, Contact, Products, Services, Blog, Portfolio, Testimonials, Privacy Policy, Terms)"
+    },
+    "sectionTextColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#0F172A",
+      "description": "Text color on those light banner and divider sections"
+    },
+    "contentCardColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#FFFFFF",
+      "description": "Background color of cards, boxes, forms, and menus on inner pages (product cards, service cards, testimonial cards, the navigation dropdown)"
+    },
+    "contentCardTextColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#0F172A",
+      "description": "Text color inside those cards, boxes, forms, and menus"
     },
     "fontPairing": {
       "type": "enumeration",

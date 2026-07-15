@@ -746,6 +746,10 @@ export default {
           footerTextColor: '#F7F7F7',
           pageTextColor: '#F7F7F7',
           cardTextColor: '#F7F7F7',
+          sectionColor: '#F8FAFC',
+          sectionTextColor: '#0F172A',
+          contentCardColor: '#FFFFFF',
+          contentCardTextColor: '#0F172A',
           fontPairing: 'Modern Sans (Outfit + Rubik)',
           radiusStyle: 'Soft (current default)',
           shadowStyle: 'Subtle (current default)',
@@ -756,16 +760,21 @@ export default {
     } else {
       // Record predates fontPairing/radiusStyle/shadowStyle, the header/
       // footer/pageBackground/card/button/navHighlight color split (which
-      // replaced the old single inkColor field), and the header/footer/page/
+      // replaced the old single inkColor field), the header/footer/page/
       // card TEXT color split (previously auto-derived from the background,
-      // now independently pickable) — backfill so the (required) fields
-      // aren't left null. header/footer/page/card background default to
-      // inkColor's last known live value (#000000, unchanged throughout this
-      // project) since that field no longer exists to read from; the new
-      // text-color fields default to #F7F7F7, the exact shade that was being
-      // auto-derived from #000000 before this split, so nothing visually
-      // changes; button/navHighlight default to the record's own current
-      // brandColor, so the user's own picked color carries forward.
+      // now independently pickable), and section/contentCard (the light
+      // banner sections and white cards on inner pages like About/Contact/
+      // Products, previously hardcoded slate/white with no Strapi control
+      // at all) — backfill so the (required) fields aren't left null.
+      // header/footer/page/card background default to inkColor's last known
+      // live value (#000000, unchanged throughout this project) since that
+      // field no longer exists to read from; the dark-zone text-color
+      // fields default to #F7F7F7, the exact shade that was being
+      // auto-derived from #000000 before that split; button/navHighlight
+      // default to the record's own current brandColor; section/contentCard
+      // default to the exact hex the hardcoded slate-50/slate-900/white
+      // Tailwind classes they replace already rendered as, so nothing
+      // visually changes until the user edits a field.
       const backfill: Record<string, string> = {};
       if (!existingTheme.fontPairing) backfill.fontPairing = 'Modern Sans (Outfit + Rubik)';
       if (!existingTheme.radiusStyle) backfill.radiusStyle = 'Soft (current default)';
@@ -780,6 +789,10 @@ export default {
       if (!existingTheme.footerTextColor) backfill.footerTextColor = '#F7F7F7';
       if (!existingTheme.pageTextColor) backfill.pageTextColor = '#F7F7F7';
       if (!existingTheme.cardTextColor) backfill.cardTextColor = '#F7F7F7';
+      if (!existingTheme.sectionColor) backfill.sectionColor = '#F8FAFC';
+      if (!existingTheme.sectionTextColor) backfill.sectionTextColor = '#0F172A';
+      if (!existingTheme.contentCardColor) backfill.contentCardColor = '#FFFFFF';
+      if (!existingTheme.contentCardTextColor) backfill.contentCardTextColor = '#0F172A';
       if (Object.keys(backfill).length > 0) {
         await strapi.documents('api::theme-setting.theme-setting').update({
           documentId: existingTheme.documentId,

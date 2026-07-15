@@ -842,7 +842,7 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
 export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
   collectionName: 'theme_settings';
   info: {
-    description: 'Site-wide theme: colors for each part of the site, fonts, shape/shadow style, logo & favicon. Editing and publishing here updates the live site within ~60 seconds \u2014 no code change needed.';
+    description: 'Site-wide theme: colors for every part of the site (dark homepage sections and light inner pages alike), fonts, shape/shadow style, logo & favicon. Editing and publishing here updates the live site within ~60 seconds \u2014 no code change needed.';
     displayName: 'Theme Setting';
     pluralName: 'theme-settings';
     singularName: 'theme-setting';
@@ -871,6 +871,14 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
       Schema.Attribute.DefaultTo<'#F7F7F7'>;
+    contentCardColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#FFFFFF'>;
+    contentCardTextColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#0F172A'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -930,6 +938,14 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Soft (current default)'>;
+    sectionColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#F8FAFC'>;
+    sectionTextColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#0F172A'>;
     shadowStyle: Schema.Attribute.Enumeration<
       [
         'Flat (minimal shadow)',
