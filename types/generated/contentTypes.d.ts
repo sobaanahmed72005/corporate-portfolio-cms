@@ -897,11 +897,11 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     accentColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#38BDF8'>;
+      Schema.Attribute.DefaultTo<'#6366F1'>;
     brandColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#2563EB'>;
+      Schema.Attribute.DefaultTo<'#1E40AF'>;
     buttonColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
@@ -964,7 +964,7 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     navHighlightColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#2563EB'>;
+      Schema.Attribute.DefaultTo<'#0EA5E9'>;
     pageBackgroundColor: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<'global::color'> &

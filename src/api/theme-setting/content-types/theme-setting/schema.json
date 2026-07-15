@@ -16,14 +16,14 @@
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#2563EB",
+      "default": "#1E40AF",
       "description": "Background for the highlighted call-to-action banner, your logo badge, and decorative homepage accents"
     },
     "accentColor": {
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#38BDF8",
+      "default": "#6366F1",
       "description": "Accent color — used for secondary CTAs and highlights"
     },
     "headerColor": {
@@ -65,7 +65,7 @@
       "type": "string",
       "customField": "global::color",
       "required": true,
-      "default": "#2563EB",
+      "default": "#0EA5E9",
       "description": "Color used to highlight whichever page you're currently on in the menu"
     },
     "headerTextColor": {
