@@ -37,6 +37,13 @@
       "type": "string",
       "required": true
     },
+    "iconColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#3B82F6",
+      "description": "Icon badge color for this office"
+    },
     "photo": {
       "type": "media",
       "multiple": false,

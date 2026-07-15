@@ -30,9 +30,12 @@
       "min": 1,
       "max": 5
     },
-    "gradient": {
+    "iconColor": {
       "type": "string",
-      "required": true
+      "customField": "global::color",
+      "required": true,
+      "default": "#3B82F6",
+      "description": "Color of the round initial badge shown when no photo is uploaded"
     },
     "photo": {
       "type": "media",

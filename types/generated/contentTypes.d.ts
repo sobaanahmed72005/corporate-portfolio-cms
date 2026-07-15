@@ -560,6 +560,10 @@ export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     email: Schema.Attribute.Email & Schema.Attribute.Required;
     icon: Schema.Attribute.String & Schema.Attribute.Required;
+    iconColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#3B82F6'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -732,6 +736,42 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiReasonReason extends Struct.CollectionTypeSchema {
+  collectionName: 'reasons';
+  info: {
+    description: 'The reason tiles shown in the "Why Choose Us" section on the home page';
+    displayName: 'Why Choose Us Reason';
+    pluralName: 'reasons';
+    singularName: 'reason';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    icon: Schema.Attribute.String & Schema.Attribute.Required;
+    iconColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#3B82F6'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::reason.reason'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    tag: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiServiceService extends Struct.CollectionTypeSchema {
   collectionName: 'services';
   info: {
@@ -812,7 +852,10 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    gradient: Schema.Attribute.String & Schema.Attribute.Required;
+    iconColor: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'global::color'> &
+      Schema.Attribute.DefaultTo<'#3B82F6'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1480,6 +1523,7 @@ declare module '@strapi/strapi' {
       'api::product-category.product-category': ApiProductCategoryProductCategory;
       'api::product.product': ApiProductProduct;
       'api::project.project': ApiProjectProject;
+      'api::reason.reason': ApiReasonReason;
       'api::service.service': ApiServiceService;
       'api::stat.stat': ApiStatStat;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;

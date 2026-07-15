@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reasons",
+  "info": {
+    "singularName": "reason",
+    "pluralName": "reasons",
+    "displayName": "Why Choose Us Reason",
+    "description": "The reason tiles shown in the \"Why Choose Us\" section on the home page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "tag": {
+      "type": "string",
+      "required": true,
+      "description": "Short badge text under the description, e.g. \"TRUSTED SOURCING\""
+    },
+    "icon": {
+      "type": "string",
+      "required": true,
+      "description": "Key into the frontend's Icon.tsx registry"
+    },
+    "iconColor": {
+      "type": "string",
+      "customField": "global::color",
+      "required": true,
+      "default": "#3B82F6",
+      "description": "Icon badge color for this reason tile"
+    }
+  }
+}

@@ -328,7 +328,7 @@ const testimonials = [
     quote:
       'The CCTV system they installed across our branches has been rock solid. Remote monitoring from one app makes it easy to check in on any location.',
     rating: 5,
-    gradient: 'rose',
+    iconColor: '#F43F5E',
   },
   {
     name: 'Sana K.',
@@ -336,7 +336,7 @@ const testimonials = [
     quote:
       'Our solar backup setup has completely changed how load-shedding affects us. The team sized the system properly and installation was clean and quick.',
     rating: 5,
-    gradient: 'orange',
+    iconColor: '#F97316',
   },
   {
     name: 'Bilal M.',
@@ -344,7 +344,7 @@ const testimonials = [
     quote:
       "We had constant WiFi dead zones across our floors. They redesigned the whole network and it's been reliable ever since.",
     rating: 5,
-    gradient: 'purple',
+    iconColor: '#8B5CF6',
   },
   {
     name: 'Fatima N.',
@@ -352,14 +352,14 @@ const testimonials = [
     quote:
       'Bulk ordering accessories for our labs used to be a hassle. Their team handles sourcing and delivery consistently, order after order.',
     rating: 5,
-    gradient: 'green',
+    iconColor: '#10B981',
   },
   {
     name: 'Usman T.',
     role: 'Homeowner',
     quote: 'Added a video doorbell and a couple of outdoor cameras. Setup was straightforward and the mobile app just works.',
     rating: 4,
-    gradient: 'blue',
+    iconColor: '#3B82F6',
   },
   {
     name: 'Hira S.',
@@ -367,7 +367,7 @@ const testimonials = [
     quote:
       "What stands out is the follow-up support. Whenever something needs a look, they're responsive on WhatsApp and quick to send someone out.",
     rating: 5,
-    gradient: 'cyan',
+    iconColor: '#06B6D4',
   },
 ];
 
@@ -382,6 +382,7 @@ const offices = [
     email: 'info@example.com',
     address: 'Shop/Office Address Line 1, City, Pakistan',
     icon: 'building',
+    iconColor: '#3B82F6',
   },
   {
     slug: 'branch-2',
@@ -390,6 +391,38 @@ const offices = [
     email: 'branch@example.com',
     address: 'Shop/Office Address Line 2, City 2, Pakistan',
     icon: 'globe',
+    iconColor: '#3B82F6',
+  },
+];
+
+const reasons = [
+  {
+    title: 'Quality-Checked Products',
+    description: 'Every product is sourced and checked for reliability before it reaches you.',
+    tag: 'TRUSTED SOURCING',
+    icon: 'shield-check',
+    iconColor: '#3B82F6',
+  },
+  {
+    title: 'Professional Installation',
+    description: 'Our technicians handle CCTV, solar, and networking setup from start to finish.',
+    tag: 'EXPERT TEAM',
+    icon: 'truck',
+    iconColor: '#F97316',
+  },
+  {
+    title: 'Responsive Support',
+    description: 'Reach us by phone or WhatsApp for quick answers and after-installation support.',
+    tag: 'ALWAYS AVAILABLE',
+    icon: 'headset',
+    iconColor: '#10B981',
+  },
+  {
+    title: 'Bulk & Corporate Ready',
+    description: 'Volume pricing and reliable sourcing for corporate and institutional orders.',
+    tag: 'VOLUME PRICING',
+    icon: 'badge-check',
+    iconColor: '#8B5CF6',
   },
 ];
 
@@ -589,7 +622,8 @@ export default {
         | 'api::service.service'
         | 'api::blog-post.blog-post'
         | 'api::testimonial.testimonial'
-        | 'api::office.office',
+        | 'api::office.office'
+        | 'api::reason.reason',
       data: Record<string, unknown>[],
       label: string,
     ) => {
@@ -612,7 +646,8 @@ export default {
         | 'api::product-category.product-category'
         | 'api::service.service'
         | 'api::portfolio-category.portfolio-category'
-        | 'api::course.course',
+        | 'api::course.course'
+        | 'api::office.office',
       slugToColor: Record<string, string>,
       label: string,
     ) => {
@@ -622,16 +657,49 @@ export default {
         const slug = (entry as { slug?: string }).slug;
         const iconColor = (entry as { iconColor?: string }).iconColor;
         if (!iconColor && slug && slugToColor[slug]) {
-          await strapi.documents(uid).update({
-            documentId: entry.documentId,
-            data: { iconColor: slugToColor[slug] },
-            status: 'published',
-          });
-          backfilled++;
+          try {
+            await strapi.documents(uid).update({
+              documentId: entry.documentId,
+              data: { iconColor: slugToColor[slug] },
+              status: 'published',
+            });
+            backfilled++;
+          } catch (err) {
+            // Don't let one entry with pre-existing bad data (e.g. an
+            // orphaned draft missing another required field) crash the
+            // whole boot — log it and keep going.
+            strapi.log.warn(`[seed] ${label}: failed to backfill iconColor on ${slug}: ${(err as Error).message}`);
+          }
         }
       }
       if (backfilled > 0) {
         strapi.log.info(`[seed] ${label}: backfilled iconColor on ${backfilled} existing entries`);
+      }
+    };
+
+    // Testimonials predate iconColor (it replaced the old named `gradient`
+    // field) and have no slug, so backfill by name instead.
+    const backfillTestimonialIconColorByName = async (nameToColor: Record<string, string>) => {
+      const entries = await strapi.documents('api::testimonial.testimonial').findMany({});
+      let backfilled = 0;
+      for (const entry of entries) {
+        const name = (entry as { name?: string }).name;
+        const iconColor = (entry as { iconColor?: string }).iconColor;
+        if (!iconColor && name && nameToColor[name]) {
+          try {
+            await strapi.documents('api::testimonial.testimonial').update({
+              documentId: entry.documentId,
+              data: { iconColor: nameToColor[name] },
+              status: 'published',
+            });
+            backfilled++;
+          } catch (err) {
+            strapi.log.warn(`[seed] testimonials: failed to backfill iconColor on ${name}: ${(err as Error).message}`);
+          }
+        }
+      }
+      if (backfilled > 0) {
+        strapi.log.info(`[seed] testimonials: backfilled iconColor on ${backfilled} existing entries`);
       }
     };
 
@@ -680,7 +748,21 @@ export default {
     );
     await seedIfEmpty('api::blog-post.blog-post', blogPosts, 'blog posts');
     await seedIfEmpty('api::testimonial.testimonial', testimonials, 'testimonials');
+    await backfillTestimonialIconColorByName({
+      'Ahmed R.': '#F43F5E',
+      'Sana K.': '#F97316',
+      'Bilal M.': '#8B5CF6',
+      'Fatima N.': '#10B981',
+      'Usman T.': '#3B82F6',
+      'Hira S.': '#06B6D4',
+    });
     await seedIfEmpty('api::office.office', offices, 'offices');
+    await backfillIconColorBySlug(
+      'api::office.office',
+      { headquarters: '#3B82F6', 'branch-2': '#3B82F6' },
+      'offices',
+    );
+    await seedIfEmpty('api::reason.reason', reasons, 'why-choose-us reasons');
 
     // portfolio-category first (project relations point back to it).
     const existingPortfolioCategories = await strapi
