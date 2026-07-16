@@ -435,6 +435,7 @@ const offices = [
     address: 'Shop/Office Address Line 1, City, Pakistan',
     icon: 'building',
     iconColor: '#3B82F6',
+    displayOrder: 1,
   },
   {
     slug: 'branch-2',
@@ -444,6 +445,7 @@ const offices = [
     address: 'Shop/Office Address Line 2, City 2, Pakistan',
     icon: 'globe',
     iconColor: '#3B82F6',
+    displayOrder: 2,
   },
 ];
 
@@ -659,10 +661,20 @@ export default {
         strapi.log.info(`[seed] ${label}: ${existing} already present, skipping`);
         return;
       }
+      let created = 0;
       for (const entry of data) {
-        await strapi.documents(uid).create({ data: entry, status: 'published' });
+        try {
+          await strapi.documents(uid).create({ data: entry, status: 'published' });
+          created++;
+        } catch (err) {
+          // One bad entry (transient DB error, bad env at boot) shouldn't
+          // silently leave the collection "non-empty" but incomplete —
+          // logging and continuing at least seeds everything that can
+          // succeed, and surfaces exactly what didn't.
+          strapi.log.warn(`[seed] ${label}: failed to create an entry: ${(err as Error).message}`);
+        }
       }
-      strapi.log.info(`[seed] ${label}: created ${data.length}`);
+      strapi.log.info(`[seed] ${label}: created ${created}/${data.length}`);
     };
 
     // Existing rows predate iconColor (it replaced the old named `gradient`
@@ -732,20 +744,30 @@ export default {
     // product-category first (product relations point back to it by slug).
     const existingCategories = await strapi.documents('api::product-category.product-category').count({});
     if (existingCategories === 0) {
+      let categoriesCreated = 0;
       for (const category of productCategories) {
         const { products, ...categoryData } = category;
-        const created = await strapi
-          .documents('api::product-category.product-category')
-          .create({ data: categoryData, status: 'published' });
+        try {
+          const created = await strapi
+            .documents('api::product-category.product-category')
+            .create({ data: categoryData, status: 'published' });
+          categoriesCreated++;
 
-        for (const product of products) {
-          await strapi.documents('api::product.product').create({
-            data: { ...product, category: created.documentId },
-            status: 'published',
-          });
+          for (const product of products) {
+            try {
+              await strapi.documents('api::product.product').create({
+                data: { ...product, category: created.documentId },
+                status: 'published',
+              });
+            } catch (err) {
+              strapi.log.warn(`[seed] product categories: failed to create product "${product.slug}": ${(err as Error).message}`);
+            }
+          }
+        } catch (err) {
+          strapi.log.warn(`[seed] product categories: failed to create category "${category.slug}": ${(err as Error).message}`);
         }
       }
-      strapi.log.info(`[seed] product categories + products: created ${productCategories.length} categories`);
+      strapi.log.info(`[seed] product categories + products: created ${categoriesCreated}/${productCategories.length} categories`);
     } else {
       strapi.log.info(`[seed] product categories: ${existingCategories} already present, skipping`);
       await backfillIconColorBySlug(
@@ -789,6 +811,33 @@ export default {
       { headquarters: '#3B82F6', 'branch-2': '#3B82F6' },
       'offices',
     );
+    // New field — existing office entries created before displayOrder
+    // existed have no value for it. Backfill by name so "Head Office" sorts
+    // before "Branch Office" without the user needing to touch it.
+    {
+      const nameToOrder: Record<string, number> = { 'Head Office': 1, 'Branch Office': 2 };
+      const officeEntries = await strapi.documents('api::office.office').findMany({});
+      let backfilled = 0;
+      for (const entry of officeEntries) {
+        const name = (entry as { name?: string }).name;
+        const displayOrder = (entry as { displayOrder?: number }).displayOrder;
+        if (!displayOrder && name && nameToOrder[name]) {
+          try {
+            await strapi.documents('api::office.office').update({
+              documentId: entry.documentId,
+              data: { displayOrder: nameToOrder[name] },
+              status: 'published',
+            });
+            backfilled++;
+          } catch (err) {
+            strapi.log.warn(`[seed] offices: failed to backfill displayOrder on ${name}: ${(err as Error).message}`);
+          }
+        }
+      }
+      if (backfilled > 0) {
+        strapi.log.info(`[seed] offices: backfilled displayOrder on ${backfilled} existing entries`);
+      }
+    }
     await seedIfEmpty('api::reason.reason', reasons, 'why-choose-us reasons');
 
     // portfolio-category first (project relations point back to it).
@@ -796,20 +845,30 @@ export default {
       .documents('api::portfolio-category.portfolio-category')
       .count({});
     if (existingPortfolioCategories === 0) {
+      let portfolioCategoriesCreated = 0;
       for (const category of portfolioCategories) {
         const { projects, ...categoryData } = category;
-        const created = await strapi
-          .documents('api::portfolio-category.portfolio-category')
-          .create({ data: categoryData, status: 'published' });
+        try {
+          const created = await strapi
+            .documents('api::portfolio-category.portfolio-category')
+            .create({ data: categoryData, status: 'published' });
+          portfolioCategoriesCreated++;
 
-        for (const project of projects) {
-          await strapi.documents('api::project.project').create({
-            data: { ...project, category: created.documentId },
-            status: 'published',
-          });
+          for (const project of projects) {
+            try {
+              await strapi.documents('api::project.project').create({
+                data: { ...project, category: created.documentId },
+                status: 'published',
+              });
+            } catch (err) {
+              strapi.log.warn(`[seed] portfolio categories: failed to create project "${project.slug}": ${(err as Error).message}`);
+            }
+          }
+        } catch (err) {
+          strapi.log.warn(`[seed] portfolio categories: failed to create category "${category.slug}": ${(err as Error).message}`);
         }
       }
-      strapi.log.info(`[seed] portfolio categories + projects: created ${portfolioCategories.length} categories`);
+      strapi.log.info(`[seed] portfolio categories + projects: created ${portfolioCategoriesCreated}/${portfolioCategories.length} categories`);
     } else {
       strapi.log.info(`[seed] portfolio categories: ${existingPortfolioCategories} already present, skipping`);
       await backfillIconColorBySlug(

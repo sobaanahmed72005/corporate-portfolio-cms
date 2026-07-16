@@ -50,6 +50,12 @@
       "required": false,
       "allowedTypes": ["images"],
       "description": "Optional real office photo — falls back to an empty photo slot when unset"
+    },
+    "displayOrder": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "description": "Controls the order offices appear in on the site — lower numbers show first (e.g. 1, 2, 3)"
     }
   }
 }

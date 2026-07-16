@@ -33,6 +33,10 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
   },
   upload: {
     config: {
+      // Strapi's own default is ~1GB — far more than any product photo,
+      // logo, or PDF this site needs, and an easy way to accidentally fill
+      // disk. 20MB comfortably covers real media, including large PDFs.
+      sizeLimit: 20 * 1024 * 1024,
       security: {
         allowedTypes: allowedMediaTypes,
         deniedTypes: deniedExecutableTypes,

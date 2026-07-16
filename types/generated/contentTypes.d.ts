@@ -565,6 +565,9 @@ export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    displayOrder: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<0>;
     email: Schema.Attribute.Email & Schema.Attribute.Required;
     icon: Schema.Attribute.String & Schema.Attribute.Required;
     iconColor: Schema.Attribute.String &
