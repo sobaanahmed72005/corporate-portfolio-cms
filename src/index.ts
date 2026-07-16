@@ -10,18 +10,17 @@ import type { Core } from '@strapi/strapi';
 
 const productCategories = [
   {
-    slug: 'chargers-power',
-    name: 'Chargers & Power Accessories',
-    shortName: 'Chargers & Power',
-    description:
-      'Fast chargers, power banks, and charging cables for phones, laptops, and other devices.',
-    icon: 'plug',
+    slug: 'mobile-accessories',
+    name: 'Mobile Accessories',
+    shortName: 'Mobile Accessories',
+    description: 'Chargers, cables, power banks, and protective accessories for smartphones.',
+    icon: 'smartphone',
     iconColor: '#3B82F6',
     products: [
       {
         slug: 'gan-fast-wall-charger',
         name: 'GaN Fast Wall Chargers',
-        description: 'Compact USB-C PD chargers (20W–65W) for phones and laptops.',
+        description: 'Compact USB-C PD chargers (20W–65W) for phones.',
         icon: 'plug',
       },
       {
@@ -37,10 +36,44 @@ const productCategories = [
         icon: 'battery-charging',
       },
       {
-        slug: 'charging-cables',
-        name: 'Charging Cables & Adapters',
-        description: 'Durable USB-C, Lightning, and Micro-USB cables and adapters.',
+        slug: 'phone-cases-screen-protectors',
+        name: 'Phone Cases & Screen Protectors',
+        description: 'Protective cases and tempered-glass screen protectors for popular phone models.',
+        icon: 'smartphone',
+      },
+    ],
+  },
+  {
+    slug: 'laptop-accessories',
+    name: 'Laptop Accessories',
+    shortName: 'Laptop Accessories',
+    description: 'Chargers, docking stations, bags, and peripherals to get more out of your laptop.',
+    icon: 'laptop',
+    iconColor: '#06B6D4',
+    products: [
+      {
+        slug: 'laptop-chargers-power-adapters',
+        name: 'Laptop Chargers & Power Adapters',
+        description: 'Replacement and universal power adapters for popular laptop brands.',
+        icon: 'plug',
+      },
+      {
+        slug: 'usb-c-hubs-docking-stations',
+        name: 'USB-C Hubs & Docking Stations',
+        description: "Multi-port hubs and docking stations to expand your laptop's connectivity.",
         icon: 'cable',
+      },
+      {
+        slug: 'laptop-bags-sleeves',
+        name: 'Laptop Bags & Sleeves',
+        description: 'Padded sleeves and carry bags sized for common laptop screen sizes.',
+        icon: 'briefcase',
+      },
+      {
+        slug: 'wireless-mice-keyboards',
+        name: 'Wireless Mice & Keyboards',
+        description: 'Compact wireless mice and keyboards for a proper desk setup on the go.',
+        icon: 'mouse',
       },
     ],
   },
@@ -699,7 +732,8 @@ export default {
       await backfillIconColorBySlug(
         'api::product-category.product-category',
         {
-          'chargers-power': '#3B82F6',
+          'mobile-accessories': '#3B82F6',
+          'laptop-accessories': '#06B6D4',
           'cctv-security': '#F43F5E',
           'solar-panels': '#F97316',
           networking: '#8B5CF6',
