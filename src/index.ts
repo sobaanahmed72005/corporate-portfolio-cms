@@ -596,12 +596,12 @@ const portfolioCategories = [
   },
 ];
 
-// PLACEHOLDER — "Years of Experience" was previously computed from
-// company.foundingYear on the frontend; snapshotted here as a plain editable
-// number per the user's request. "Brands & Manufacturers" and "Projects
-// Completed" were already placeholders. Edit all three directly from now on.
+// "Years of Experience" auto-calculates from foundingYearForAutoCount (the
+// company was founded in 2016) and advances on its own every year — no
+// value needed. "Brands & Manufacturers" and "Projects Completed" are
+// plain editable placeholder numbers.
 const stats = [
-  { label: 'Years of Experience', value: 2, suffix: '+' },
+  { label: 'Years of Experience', foundingYearForAutoCount: 2016, suffix: '+' },
   { label: 'Brands & Manufacturers', value: 15, suffix: '+' },
   { label: 'Projects Completed', value: 500, suffix: '+' },
 ];

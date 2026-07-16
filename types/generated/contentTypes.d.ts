@@ -788,6 +788,7 @@ export interface ApiStatStat extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    foundingYearForAutoCount: Schema.Attribute.Integer;
     label: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::stat.stat'> &
@@ -797,7 +798,7 @@ export interface ApiStatStat extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    value: Schema.Attribute.Integer & Schema.Attribute.Required;
+    value: Schema.Attribute.Integer;
   };
 }
 

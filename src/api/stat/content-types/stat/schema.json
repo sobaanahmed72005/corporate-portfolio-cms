@@ -19,13 +19,19 @@
     },
     "value": {
       "type": "integer",
-      "required": true
+      "required": false,
+      "description": "Fixed number to display. Leave empty if you set \"Calculate from founding year\" below instead."
     },
     "suffix": {
       "type": "string",
       "required": false,
       "default": "+",
       "description": "e.g. \"+\" or \"K+\""
+    },
+    "foundingYearForAutoCount": {
+      "type": "integer",
+      "required": false,
+      "description": "If set, this stat's number is calculated automatically as (current year - this year) and updates on its own every year — use this for \"Years of Experience\" instead of typing a number in Value. Leave empty for stats that use a fixed number."
     }
   }
 }
