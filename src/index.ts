@@ -8,6 +8,25 @@ import type { Core } from '@strapi/strapi';
  * empty, so it won't overwrite anything you've changed.
  */
 
+const companyInfo = {
+  name: 'IT Solutions Trade & Service',
+  shortName: 'IT Solutions',
+  tagline: 'Your Trusted Partner for IT Accessories, Security & Solar Solutions',
+  description:
+    'IT Solutions Trade & Service supplies and installs IT accessories, CCTV security systems, solar power solutions, and networking equipment for homes and businesses across Pakistan.',
+  phone: '+92 300 0000000',
+  whatsapp: '+923000000000',
+  email: 'info@example.com',
+  addressLine1: 'Shop/Office Address Line 1',
+  addressCity: 'City',
+  addressCountry: 'Pakistan',
+  storeUrl: 'https://store.example.com',
+  facebookUrl: 'https://facebook.com/',
+  instagramUrl: 'https://instagram.com/',
+  linkedinUrl: 'https://linkedin.com/',
+  foundingYear: 2016,
+};
+
 const productCategories = [
   {
     slug: 'mobile-accessories',
@@ -891,6 +910,20 @@ export default {
       } else {
         strapi.log.info('[seed] theme setting: already present, skipping');
       }
+    }
+
+    // Single type — seed the one entry with the same placeholder values
+    // lib/data/company.ts used to hold, so nothing changes visually until
+    // the user edits it themselves from the admin panel.
+    const existingCompanyInfo = await strapi.documents('api::company-info.company-info').findFirst();
+    if (!existingCompanyInfo) {
+      await strapi.documents('api::company-info.company-info').create({
+        data: companyInfo,
+        status: 'published',
+      });
+      strapi.log.info('[seed] company info: created');
+    } else {
+      strapi.log.info('[seed] company info: already present, skipping');
     }
   },
 };

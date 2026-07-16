@@ -506,6 +506,49 @@ export interface ApiClientLogoClientLogo extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCompanyInfoCompanyInfo extends Struct.SingleTypeSchema {
+  collectionName: 'company_infos';
+  info: {
+    description: 'Your business name, tagline, contact details, and social links \u2014 used everywhere across the site (header, footer, contact page, buttons, page titles).';
+    displayName: 'Company Info';
+    pluralName: 'company-infos';
+    singularName: 'company-info';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    addressCity: Schema.Attribute.String & Schema.Attribute.Required;
+    addressCountry: Schema.Attribute.String & Schema.Attribute.Required;
+    addressLine1: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    facebookUrl: Schema.Attribute.String;
+    foundingYear: Schema.Attribute.Integer & Schema.Attribute.Required;
+    instagramUrl: Schema.Attribute.String;
+    linkedinUrl: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::company-info.company-info'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    shortName: Schema.Attribute.String & Schema.Attribute.Required;
+    storeUrl: Schema.Attribute.String & Schema.Attribute.Required;
+    tagline: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whatsapp: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
   collectionName: 'offices';
   info: {
@@ -1490,6 +1533,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'api::client-logo.client-logo': ApiClientLogoClientLogo;
+      'api::company-info.company-info': ApiCompanyInfoCompanyInfo;
       'api::office.office': ApiOfficeOffice;
       'api::portfolio-category.portfolio-category': ApiPortfolioCategoryPortfolioCategory;
       'api::product-category.product-category': ApiProductCategoryProductCategory;

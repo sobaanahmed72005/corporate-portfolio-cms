@@ -1,0 +1,86 @@
+{
+  "kind": "singleType",
+  "collectionName": "company_infos",
+  "info": {
+    "singularName": "company-info",
+    "pluralName": "company-infos",
+    "displayName": "Company Info",
+    "description": "Your business name, tagline, contact details, and social links — used everywhere across the site (header, footer, contact page, buttons, page titles)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "description": "Full business name, e.g. \"IT Solutions Trade & Service\""
+    },
+    "shortName": {
+      "type": "string",
+      "required": true,
+      "description": "Short version shown in the header logo and tight spaces, e.g. \"IT Solutions\""
+    },
+    "tagline": {
+      "type": "string",
+      "required": true,
+      "description": "One-line slogan shown under your name in places like the browser tab title"
+    },
+    "description": {
+      "type": "text",
+      "required": true,
+      "description": "1-2 sentence summary of what you do — shown in the footer and used for SEO"
+    },
+    "phone": {
+      "type": "string",
+      "required": true,
+      "description": "Main phone number, shown in the header and footer"
+    },
+    "whatsapp": {
+      "type": "string",
+      "required": true,
+      "description": "WhatsApp number with country code, e.g. +923001234567 — no spaces"
+    },
+    "email": {
+      "type": "email",
+      "required": true,
+      "description": "Main contact email, shown in the header and footer"
+    },
+    "addressLine1": {
+      "type": "string",
+      "required": true,
+      "description": "Street address / shop or office address"
+    },
+    "addressCity": {
+      "type": "string",
+      "required": true
+    },
+    "addressCountry": {
+      "type": "string",
+      "required": true
+    },
+    "storeUrl": {
+      "type": "string",
+      "required": true,
+      "description": "Link to your online store — used by every \"Visit Our Store\" / \"Shop Now\" button"
+    },
+    "facebookUrl": {
+      "type": "string",
+      "required": false
+    },
+    "instagramUrl": {
+      "type": "string",
+      "required": false
+    },
+    "linkedinUrl": {
+      "type": "string",
+      "required": false
+    },
+    "foundingYear": {
+      "type": "integer",
+      "required": true,
+      "description": "The year the business was founded — used to auto-calculate \"Years of Experience\""
+    }
+  }
+}
