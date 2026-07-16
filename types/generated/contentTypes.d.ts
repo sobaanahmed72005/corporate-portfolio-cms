@@ -965,6 +965,9 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Subtle (current default)'>;
+    showEventsSection: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
     showTrustedByLogos: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;

@@ -179,6 +179,12 @@
       "required": true,
       "default": true,
       "description": "Show the \"Trusted by Industry Leaders\" client logo strip on the home page. Turn this off until you have real client logos to show."
+    },
+    "showEventsSection": {
+      "type": "boolean",
+      "required": true,
+      "default": false,
+      "description": "Show the \"Events & Workshops\" banner on the home page. Turn this on once you have a real event to announce."
     }
   }
 }

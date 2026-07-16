@@ -834,6 +834,7 @@ export default {
           radiusStyle: 'Soft (current default)',
           shadowStyle: 'Subtle (current default)',
           showTrustedByLogos: true,
+          showEventsSection: false,
         },
         status: 'published',
       });
@@ -876,6 +877,9 @@ export default {
       if (!existingTheme.contentCardTextColor) backfill.contentCardTextColor = '#0F172A';
       if (existingTheme.showTrustedByLogos === undefined || existingTheme.showTrustedByLogos === null) {
         backfill.showTrustedByLogos = true;
+      }
+      if (existingTheme.showEventsSection === undefined || existingTheme.showEventsSection === null) {
+        backfill.showEventsSection = false;
       }
       if (Object.keys(backfill).length > 0) {
         await strapi.documents('api::theme-setting.theme-setting').update({
