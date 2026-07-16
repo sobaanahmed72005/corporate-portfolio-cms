@@ -506,42 +506,6 @@ export interface ApiClientLogoClientLogo extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
-  collectionName: 'courses';
-  info: {
-    description: 'Installer training courses shown in the Training Academy section';
-    displayName: 'Course';
-    pluralName: 'courses';
-    singularName: 'course';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
-    icon: Schema.Attribute.String & Schema.Attribute.Required;
-    iconColor: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.CustomField<'global::color'> &
-      Schema.Attribute.DefaultTo<'#3B82F6'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::course.course'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
   collectionName: 'offices';
   info: {
@@ -1000,6 +964,9 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Subtle (current default)'>;
+    showTrustedByLogos: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1519,7 +1486,6 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'api::client-logo.client-logo': ApiClientLogoClientLogo;
-      'api::course.course': ApiCourseCourse;
       'api::office.office': ApiOfficeOffice;
       'api::portfolio-category.portfolio-category': ApiPortfolioCategoryPortfolioCategory;
       'api::product-category.product-category': ApiProductCategoryProductCategory;

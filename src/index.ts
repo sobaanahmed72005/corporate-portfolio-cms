@@ -573,30 +573,6 @@ const stats = [
   { label: 'Projects Completed', value: 500, suffix: '+' },
 ];
 
-const courses = [
-  {
-    slug: 'cctv-installation-certification',
-    name: 'CCTV Installation Certification',
-    description: 'Camera placement, cabling, and NVR/DVR setup for installers.',
-    icon: 'camera',
-    iconColor: '#F43F5E',
-  },
-  {
-    slug: 'solar-system-design',
-    name: 'Solar System Design',
-    description: 'Load assessment and sizing for grid-tie and hybrid systems.',
-    icon: 'sun',
-    iconColor: '#F97316',
-  },
-  {
-    slug: 'networking-fundamentals',
-    name: 'Networking Fundamentals',
-    description: 'Structured cabling, routing, and WiFi coverage planning.',
-    icon: 'network',
-    iconColor: '#8B5CF6',
-  },
-];
-
 const clientLogos = Array.from({ length: 10 }, (_, i) => ({
   alt: `Client logo placeholder ${i + 1}`,
 }));
@@ -617,7 +593,6 @@ export default {
       uid:
         | 'api::product-category.product-category'
         | 'api::stat.stat'
-        | 'api::course.course'
         | 'api::client-logo.client-logo'
         | 'api::service.service'
         | 'api::blog-post.blog-post'
@@ -646,7 +621,6 @@ export default {
         | 'api::product-category.product-category'
         | 'api::service.service'
         | 'api::portfolio-category.portfolio-category'
-        | 'api::course.course'
         | 'api::office.office',
       slugToColor: Record<string, string>,
       label: string,
@@ -798,16 +772,6 @@ export default {
     }
 
     await seedIfEmpty('api::stat.stat', stats, 'stats');
-    await seedIfEmpty('api::course.course', courses, 'courses');
-    await backfillIconColorBySlug(
-      'api::course.course',
-      {
-        'cctv-installation-certification': '#F43F5E',
-        'solar-system-design': '#F97316',
-        'networking-fundamentals': '#8B5CF6',
-      },
-      'courses',
-    );
     await seedIfEmpty('api::client-logo.client-logo', clientLogos, 'client logos');
 
     // Single type — seed the one entry with today's actual live look, so
@@ -835,6 +799,7 @@ export default {
           fontPairing: 'Modern Sans (Outfit + Rubik)',
           radiusStyle: 'Soft (current default)',
           shadowStyle: 'Subtle (current default)',
+          showTrustedByLogos: true,
         },
         status: 'published',
       });
@@ -857,7 +822,7 @@ export default {
       // default to the exact hex the hardcoded slate-50/slate-900/white
       // Tailwind classes they replace already rendered as, so nothing
       // visually changes until the user edits a field.
-      const backfill: Record<string, string> = {};
+      const backfill: Record<string, string | boolean> = {};
       if (!existingTheme.fontPairing) backfill.fontPairing = 'Modern Sans (Outfit + Rubik)';
       if (!existingTheme.radiusStyle) backfill.radiusStyle = 'Soft (current default)';
       if (!existingTheme.shadowStyle) backfill.shadowStyle = 'Subtle (current default)';
@@ -875,6 +840,9 @@ export default {
       if (!existingTheme.sectionTextColor) backfill.sectionTextColor = '#0F172A';
       if (!existingTheme.contentCardColor) backfill.contentCardColor = '#FFFFFF';
       if (!existingTheme.contentCardTextColor) backfill.contentCardTextColor = '#0F172A';
+      if (existingTheme.showTrustedByLogos === undefined || existingTheme.showTrustedByLogos === null) {
+        backfill.showTrustedByLogos = true;
+      }
       if (Object.keys(backfill).length > 0) {
         await strapi.documents('api::theme-setting.theme-setting').update({
           documentId: existingTheme.documentId,

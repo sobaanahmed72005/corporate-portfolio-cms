@@ -52,7 +52,7 @@
       "customField": "global::color",
       "required": true,
       "default": "#EFF6FF",
-      "description": "Tint color for cards and boxes shown on dark sections (testimonials, offices, courses, etc.)"
+      "description": "Tint color for cards and boxes shown on dark sections (testimonials, offices, etc.)"
     },
     "buttonColor": {
       "type": "string",
@@ -173,6 +173,12 @@
       "required": false,
       "allowedTypes": ["images"],
       "description": "Browser tab icon. Falls back to favicon.ico when unset."
+    },
+    "showTrustedByLogos": {
+      "type": "boolean",
+      "required": true,
+      "default": true,
+      "description": "Show the \"Trusted by Industry Leaders\" client logo strip on the home page. Turn this off until you have real client logos to show."
     }
   }
 }
