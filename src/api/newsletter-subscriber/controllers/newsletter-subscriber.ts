@@ -16,28 +16,34 @@ export default factories.createCoreController(
         return ctx.badRequest('Email is required');
       }
 
+      let alreadySubscribed = false;
+
       try {
         await strapi.documents('api::newsletter-subscriber.newsletter-subscriber').create({
           data: { email },
         });
       } catch (error) {
         // A duplicate signup hits the unique constraint on `email` —
-        // expected, not a real failure, and never surfaced differently to
-        // the client (prevents enumerating which emails are already
-        // subscribed). Anything else (validation failure, DB outage, etc.)
-        // is unexpected and gets logged so it doesn't vanish silently, even
-        // though the client still gets the same generic response either way.
+        // expected, not a real failure. Anything else (validation failure,
+        // DB outage, etc.) is unexpected and gets logged so it doesn't
+        // vanish silently.
         const message = error instanceof Error ? error.message : String(error);
-        if (!UNIQUE_CONSTRAINT_HINT.test(message)) {
+        if (UNIQUE_CONSTRAINT_HINT.test(message)) {
+          alreadySubscribed = true;
+        } else {
           strapi.log.error(`[newsletter-subscriber] create failed unexpectedly: ${message}`);
         }
       }
 
-      // Always return the same generic success response regardless of
-      // whether the email was new, already existed, or an unexpected error
-      // occurred — see the comment above for why.
+      // The HTTP status is always 200 regardless of outcome — this route is
+      // only ever called by the backend's create-only token, never a public
+      // client, but keeping the status uniform is cheap insurance against
+      // email enumeration if that ever changes. `alreadySubscribed` in the
+      // body carries the real outcome for that trusted caller's own logging
+      // (see corporate-portfolio-backend's storeSubscriber) without varying
+      // anything an untrusted party could observe.
       ctx.status = 200;
-      ctx.body = { data: { message: 'Subscribed successfully' } };
+      ctx.body = { data: { message: 'Subscribed successfully', alreadySubscribed } };
     },
   }),
 );
