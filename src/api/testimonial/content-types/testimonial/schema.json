@@ -14,15 +14,18 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "description": "The customer's name, shown next to their review"
     },
     "role": {
       "type": "string",
-      "required": true
+      "required": true,
+      "description": "Their job title or how they describe themselves, e.g. \"Shop Owner\", \"Homeowner\""
     },
     "quote": {
       "type": "text",
-      "required": true
+      "required": true,
+      "description": "What they said about working with you — shown as the review text"
     },
     "rating": {
       "type": "integer",

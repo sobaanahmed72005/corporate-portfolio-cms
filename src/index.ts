@@ -643,6 +643,28 @@ export default {
   },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    // The `global::color` custom field only swaps in a color-swatch picker
+    // in the admin UI — nothing stops a value that isn't a real hex color
+    // from being saved through the API. Public role has zero write access
+    // to anything using this field (verified in the audit), so this is
+    // only reachable by a trusted admin already, but it's cheap insurance
+    // against a typo silently breaking site styling. Runs globally rather
+    // than being repeated across every schema.json that uses the field.
+    const HEX_COLOR_RE = /^#[0-9A-Fa-f]{6}$/;
+    strapi.documents.use(async (ctx, next) => {
+      if (ctx.action === 'create' || ctx.action === 'update') {
+        const data = (ctx.params as { data?: Record<string, unknown> })?.data;
+        if (data) {
+          for (const [key, value] of Object.entries(data)) {
+            if (/Color$/.test(key) && typeof value === 'string' && !HEX_COLOR_RE.test(value)) {
+              throw new Error(`${key} must be a hex color like #1E40AF (got ${JSON.stringify(value)})`);
+            }
+          }
+        }
+      }
+      return next();
+    });
+
     const seedIfEmpty = async (
       uid:
         | 'api::product-category.product-category'

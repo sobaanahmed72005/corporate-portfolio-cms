@@ -14,11 +14,13 @@
   "attributes": {
     "title": {
       "type": "string",
-      "required": true
+      "required": true,
+      "description": "The short headline for this reason, e.g. \"Certified Technicians\""
     },
     "description": {
       "type": "text",
-      "required": true
+      "required": true,
+      "description": "One or two sentences explaining this reason in more detail"
     },
     "tag": {
       "type": "string",
