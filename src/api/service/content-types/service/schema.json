@@ -19,11 +19,13 @@
     },
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "maxLength": 150
     },
     "description": {
       "type": "text",
-      "required": true
+      "required": true,
+      "maxLength": 2000
     },
     "features": {
       "type": "json",

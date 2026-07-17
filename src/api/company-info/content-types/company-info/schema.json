@@ -15,67 +15,85 @@
     "name": {
       "type": "string",
       "required": true,
+      "maxLength": 150,
       "description": "Full business name, e.g. \"IT Solutions Trade & Service\""
     },
     "shortName": {
       "type": "string",
       "required": true,
+      "maxLength": 50,
       "description": "Short version shown in the header logo and tight spaces, e.g. \"IT Solutions\""
     },
     "tagline": {
       "type": "string",
       "required": true,
+      "maxLength": 200,
       "description": "One-line slogan shown under your name in places like the browser tab title"
     },
     "description": {
       "type": "text",
       "required": true,
+      "maxLength": 500,
       "description": "1-2 sentence summary of what you do — shown in the footer and used for SEO"
     },
     "phone": {
       "type": "string",
       "required": true,
+      "maxLength": 30,
       "description": "Main phone number, shown in the header and footer"
     },
     "whatsapp": {
       "type": "string",
       "required": true,
+      "maxLength": 30,
       "description": "WhatsApp number with country code, e.g. +923001234567 — no spaces"
     },
     "email": {
       "type": "email",
       "required": true,
+      "maxLength": 254,
       "description": "Main contact email, shown in the header and footer"
     },
     "addressLine1": {
       "type": "string",
       "required": true,
+      "maxLength": 200,
       "description": "Street address / shop or office address"
     },
     "addressCity": {
       "type": "string",
-      "required": true
+      "required": true,
+      "maxLength": 100
     },
     "addressCountry": {
       "type": "string",
-      "required": true
+      "required": true,
+      "maxLength": 100
     },
     "storeUrl": {
       "type": "string",
       "required": true,
+      "maxLength": 500,
+      "regex": "^https?://",
       "description": "Link to your online store — used by every \"Visit Our Store\" / \"Shop Now\" button"
     },
     "facebookUrl": {
       "type": "string",
-      "required": false
+      "required": false,
+      "maxLength": 500,
+      "regex": "^https?://"
     },
     "instagramUrl": {
       "type": "string",
-      "required": false
+      "required": false,
+      "maxLength": 500,
+      "regex": "^https?://"
     },
     "linkedinUrl": {
       "type": "string",
-      "required": false
+      "required": false,
+      "maxLength": 500,
+      "regex": "^https?://"
     },
     "foundingYear": {
       "type": "integer",

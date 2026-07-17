@@ -20,31 +20,36 @@
     "title": {
       "type": "string",
       "required": true,
+      "maxLength": 200,
       "description": "The headline shown on the blog list and at the top of the post"
     },
     "category": {
       "type": "string",
       "required": true,
+      "maxLength": 100,
       "description": "Display category label, e.g. \"Security\", \"Solar Energy\""
     },
     "date": {
-      "type": "string",
+      "type": "date",
       "required": true,
-      "description": "Plain display string in \"Month D, YYYY\" format, not parsed — matches the site's existing convention"
+      "description": "Publication date — the frontend formats it for display"
     },
     "author": {
       "type": "string",
       "required": true,
+      "maxLength": 100,
       "description": "Who wrote the post — shown under the title"
     },
     "excerpt": {
       "type": "text",
       "required": true,
+      "maxLength": 500,
       "description": "Short summary shown on the blog list page, before someone clicks into the full post"
     },
     "body": {
       "type": "richtext",
       "required": true,
+      "maxLength": 50000,
       "description": "The full post content. Supports headings, bold, italic, links, and bullet lists."
     }
   }

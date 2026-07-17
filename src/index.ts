@@ -276,7 +276,7 @@ const blogPosts = [
     slug: 'signs-your-business-needs-a-cctv-upgrade',
     title: '5 Signs Your Business Needs a CCTV Upgrade',
     category: 'Security',
-    date: 'June 10, 2026',
+    date: '2026-06-10',
     author: 'IT Solutions Team',
     excerpt:
       "Grainy footage and blind spots aren't just inconvenient — they're a liability. Here's how to tell it's time to upgrade your camera system.",
@@ -294,7 +294,7 @@ const blogPosts = [
     slug: 'how-much-can-solar-really-save-you',
     title: 'How Much Can Solar Really Save You in Pakistan?',
     category: 'Solar Energy',
-    date: 'May 22, 2026',
+    date: '2026-05-22',
     author: 'IT Solutions Team',
     excerpt:
       "Between rising electricity bills and frequent load-shedding, solar is no longer a luxury upgrade. Here's how the math actually works.",
@@ -310,7 +310,7 @@ const blogPosts = [
     slug: 'cat5e-vs-cat6-which-cabling-does-your-office-need',
     title: 'Cat5e vs Cat6: Which Cabling Does Your Office Need?',
     category: 'Networking',
-    date: 'April 30, 2026',
+    date: '2026-04-30',
     author: 'IT Solutions Team',
     excerpt:
       'Structured cabling outlasts almost everything else in your office. Choosing the wrong standard means re-doing the walls in a few years.',
@@ -326,7 +326,7 @@ const blogPosts = [
     slug: 'buyers-guide-choosing-the-right-power-bank',
     title: "A Buyer's Guide to Choosing the Right Power Bank",
     category: 'IT Accessories',
-    date: 'April 8, 2026',
+    date: '2026-04-08',
     author: 'IT Solutions Team',
     excerpt:
       'Not all power banks are built the same. Capacity, output, and charging speed all matter more than the number printed on the box.',
@@ -343,7 +343,7 @@ const blogPosts = [
     slug: 'load-shedding-proofing-your-home-solar-vs-ups-vs-generator',
     title: 'Load-Shedding-Proofing Your Home: Solar vs. UPS vs. Generator',
     category: 'Solar Energy',
-    date: 'March 15, 2026',
+    date: '2026-03-15',
     author: 'IT Solutions Team',
     excerpt:
       "Each backup option has a different cost, noise, and maintenance profile. Here's how to pick the right one for your household.",
@@ -359,7 +359,7 @@ const blogPosts = [
     slug: 'bulk-procurement-tips-for-corporate-it-accessories',
     title: 'Bulk Procurement Tips for Corporate IT Accessories',
     category: 'Corporate Supply',
-    date: 'February 20, 2026',
+    date: '2026-02-20',
     author: 'IT Solutions Team',
     excerpt:
       "Ordering chargers, cables, and peripherals for a whole office is different from a one-off purchase. Here's what to plan for.",
@@ -633,8 +633,15 @@ const clientLogos = Array.from({ length: 10 }, (_, i) => ({
 
 export default {
   register({ strapi }: { strapi: Core.Strapi }) {
-    // Backs the `global::color` custom field used on theme-setting so the
-    // admin panel shows a real color-swatch picker instead of a text box.
+    // Fail fast in production if critical env vars are missing
+    if (process.env.NODE_ENV === 'production') {
+      const required = ['DATABASE_PASSWORD', 'APP_KEYS', 'ADMIN_JWT_SECRET', 'API_TOKEN_SALT', 'JWT_SECRET'];
+      const missing = required.filter((key) => !process.env[key]);
+      if (missing.length > 0) {
+        throw new Error(`[startup] Missing required environment variables for production: ${missing.join(', ')}`);
+      }
+    }
+
     strapi.customFields.register({
       name: 'color',
       type: 'string',
@@ -651,13 +658,40 @@ export default {
     // against a typo silently breaking site styling. Runs globally rather
     // than being repeated across every schema.json that uses the field.
     const HEX_COLOR_RE = /^#[0-9A-Fa-f]{6}$/;
+    const HTTPS_URL_RE = /^https?:\/\/.+/;
+    const MAX_FEATURES_COUNT = 20;
+    const MAX_FEATURE_LENGTH = 200;
+
     strapi.documents.use(async (ctx, next) => {
       if (ctx.action === 'create' || ctx.action === 'update') {
         const data = (ctx.params as { data?: Record<string, unknown> })?.data;
         if (data) {
           for (const [key, value] of Object.entries(data)) {
+            // Validate hex color fields
             if (/Color$/.test(key) && typeof value === 'string' && !HEX_COLOR_RE.test(value)) {
               throw new Error(`${key} must be a hex color like #1E40AF (got ${JSON.stringify(value)})`);
+            }
+            // Validate URL fields
+            if (/Url$/.test(key) && typeof value === 'string' && value !== '' && !HTTPS_URL_RE.test(value)) {
+              throw new Error(`${key} must start with http:// or https:// (got ${JSON.stringify(value)})`);
+            }
+          }
+          // Validate service.features is a flat array of strings
+          if ('features' in data && data.features !== undefined) {
+            const features = data.features;
+            if (!Array.isArray(features)) {
+              throw new Error('features must be an array of strings');
+            }
+            if (features.length > MAX_FEATURES_COUNT) {
+              throw new Error(`features cannot have more than ${MAX_FEATURES_COUNT} items`);
+            }
+            for (const item of features) {
+              if (typeof item !== 'string') {
+                throw new Error('Every item in features must be a string');
+              }
+              if (item.length > MAX_FEATURE_LENGTH) {
+                throw new Error(`Each feature must be at most ${MAX_FEATURE_LENGTH} characters`);
+              }
             }
           }
         }

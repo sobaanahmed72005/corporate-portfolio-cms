@@ -19,7 +19,7 @@ const config: Core.Config.Middlewares = [
       origin: allowedOrigins,
     },
   },
-  'strapi::poweredBy',
+  { name: 'strapi::poweredBy', config: { poweredBy: '' } },
   'strapi::query',
   'strapi::body',
   'strapi::session',
