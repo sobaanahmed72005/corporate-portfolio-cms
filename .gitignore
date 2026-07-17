@@ -17,6 +17,17 @@ exports/
 .strapi-updater.json
 
 ############################
+# Uploaded media
+############################
+# Real uploads (product/CCTV/solar photos, logos, etc.) shouldn't live in
+# git — this will grow unboundedly as content is added, mixing runtime
+# data with source code. Move to a cloud storage provider before real
+# uploads accumulate at scale; for now this just stops new ones from
+# being committed.
+public/uploads/*
+!public/uploads/.gitkeep
+
+############################
 # Env
 ############################
 .env

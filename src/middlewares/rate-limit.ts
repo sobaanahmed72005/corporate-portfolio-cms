@@ -1,4 +1,5 @@
 import type { Core } from '@strapi/strapi';
+import type { Context, Next } from 'koa';
 
 // Small in-memory fixed-window rate limiter for auth-related endpoints
 // (admin login, public register/forgot-password/etc) — these have no
@@ -33,11 +34,19 @@ setInterval(() => {
 const isRateLimitedPath = (path: string) => RATE_LIMITED_PATHS.some((p) => path === p);
 
 export default (_config: unknown, { strapi }: { strapi: Core.Strapi }) => {
-  return async (ctx: any, next: () => Promise<void>) => {
+  return async (ctx: Context, next: Next) => {
     if (!isRateLimitedPath(ctx.path)) {
       return next();
     }
 
+    // Koa's ctx.request.ip defaults to the raw socket connection address
+    // (proxy: false, the default) — not influenced by client-supplied
+    // X-Forwarded-For headers, so this isn't spoofable the way trusting
+    // that header directly would be. If this ever runs behind a reverse
+    // proxy and needs the real visitor IP instead of the proxy's IP,
+    // config/server.ts would need `app: { proxy: true }` plus careful
+    // handling of which forwarded-for hop to trust — don't add that
+    // without verifying the actual proxy's header behavior first.
     const ip = ctx.request.ip || 'unknown';
     const key = `${ip}:${ctx.path}`;
     const now = Date.now();
