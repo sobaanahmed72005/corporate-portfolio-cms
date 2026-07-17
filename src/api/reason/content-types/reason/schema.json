@@ -15,21 +15,25 @@
     "title": {
       "type": "string",
       "required": true,
+      "maxLength": 100,
       "description": "The short headline for this reason, e.g. \"Certified Technicians\""
     },
     "description": {
       "type": "text",
       "required": true,
+      "maxLength": 400,
       "description": "One or two sentences explaining this reason in more detail"
     },
     "tag": {
       "type": "string",
       "required": true,
+      "maxLength": 60,
       "description": "Short badge text under the description, e.g. \"TRUSTED SOURCING\""
     },
     "icon": {
       "type": "string",
       "required": true,
+      "maxLength": 50,
       "description": "Key into the frontend's Icon.tsx registry"
     },
     "iconColor": {
