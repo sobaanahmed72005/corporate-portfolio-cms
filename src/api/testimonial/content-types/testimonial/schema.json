@@ -15,16 +15,19 @@
     "name": {
       "type": "string",
       "required": true,
+      "maxLength": 100,
       "description": "The customer's name, shown next to their review"
     },
     "role": {
       "type": "string",
       "required": true,
+      "maxLength": 100,
       "description": "Their job title or how they describe themselves, e.g. \"Shop Owner\", \"Homeowner\""
     },
     "quote": {
       "type": "text",
       "required": true,
+      "maxLength": 800,
       "description": "What they said about working with you — shown as the review text"
     },
     "rating": {

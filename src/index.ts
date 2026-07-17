@@ -635,7 +635,17 @@ export default {
   register({ strapi }: { strapi: Core.Strapi }) {
     // Fail fast in production if critical env vars are missing
     if (process.env.NODE_ENV === 'production') {
-      const required = ['DATABASE_PASSWORD', 'APP_KEYS', 'ADMIN_JWT_SECRET', 'API_TOKEN_SALT', 'JWT_SECRET'];
+      const required = ['APP_KEYS', 'ADMIN_JWT_SECRET', 'API_TOKEN_SALT', 'JWT_SECRET'];
+      // DATABASE_PASSWORD only matters for mysql/postgres, and only when a
+      // full DATABASE_URL connection string (which already embeds the
+      // password) isn't provided — see config/database.ts. Requiring it
+      // unconditionally would crash a production boot on this project's own
+      // default sqlite setup, or force a redundant var when DATABASE_URL is
+      // already set (the common case on Railway).
+      const dbClient = process.env.DATABASE_CLIENT || 'sqlite';
+      if (dbClient !== 'sqlite' && !process.env.DATABASE_URL) {
+        required.push('DATABASE_PASSWORD');
+      }
       const missing = required.filter((key) => !process.env[key]);
       if (missing.length > 0) {
         throw new Error(`[startup] Missing required environment variables for production: ${missing.join(', ')}`);

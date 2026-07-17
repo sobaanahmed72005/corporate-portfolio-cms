@@ -19,15 +19,18 @@
     },
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "maxLength": 100
     },
     "description": {
       "type": "text",
-      "required": true
+      "required": true,
+      "maxLength": 500
     },
     "icon": {
       "type": "string",
       "required": true,
+      "maxLength": 50,
       "description": "Key into the frontend's Icon.tsx registry, e.g. \"camera\""
     },
     "iconColor": {
