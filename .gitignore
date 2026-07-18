@@ -15,6 +15,9 @@ build/
 dist/
 exports/
 .strapi-updater.json
+export_*.log
+import_*.log
+public/uploads_backup_*/
 
 ############################
 # Uploaded media
