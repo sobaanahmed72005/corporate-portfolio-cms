@@ -45,6 +45,12 @@
       "default": "#3B82F6",
       "description": "Icon badge and accent color for this category"
     },
+    "order": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "description": "Manual display order (ascending) on the Products page and nav menus"
+    },
     "image": {
       "type": "media",
       "multiple": false,

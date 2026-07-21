@@ -809,6 +809,9 @@ export interface ApiProductCategoryProductCategory
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
       }>;
+    order: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<0>;
     products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     shortName: Schema.Attribute.String &
