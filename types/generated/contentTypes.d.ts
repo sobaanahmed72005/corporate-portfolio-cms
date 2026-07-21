@@ -1170,6 +1170,7 @@ export interface ApiThemeSettingThemeSetting extends Struct.SingleTypeSchema {
         'Classic Corporate (Merriweather + Inter)',
         'Single Family \u2014 Inter',
         'Single Family \u2014 Outfit',
+        'Single Family \u2014 Poppins',
       ]
     > &
       Schema.Attribute.Required &

@@ -132,7 +132,8 @@
         "Technical Grotesk (Space Grotesk + Inter)",
         "Classic Corporate (Merriweather + Inter)",
         "Single Family — Inter",
-        "Single Family — Outfit"
+        "Single Family — Outfit",
+        "Single Family — Poppins"
       ],
       "default": "Modern Sans (Outfit + Rubik)",
       "required": true,
