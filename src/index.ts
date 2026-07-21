@@ -10,11 +10,11 @@ import { validateDocumentPayload } from './utils/validate-document-payload';
  */
 
 const companyInfo = {
-  name: 'IT Solutions Trade & Service',
+  name: 'IT Solutions Trade & Service Pvt. Ltd.',
   shortName: 'IT Solutions',
   tagline: 'Your Trusted Partner for IT Accessories, Security & Solar Solutions',
   description:
-    'IT Solutions Trade & Service supplies and installs IT accessories, CCTV security systems, solar power solutions, and networking equipment for homes and businesses across Pakistan.',
+    'IT Solutions Trade & Service Pvt. Ltd. supplies and installs IT accessories, CCTV security systems, solar power solutions, and networking equipment for homes and businesses across Pakistan.',
   phone: '+92 300 0000000',
   whatsapp: '+923000000000',
   email: 'info@example.com',

@@ -16,7 +16,7 @@
       "type": "string",
       "required": true,
       "maxLength": 150,
-      "description": "Full business name, e.g. \"IT Solutions Trade & Service\""
+      "description": "Full business name, e.g. \"IT Solutions Trade & Service Pvt. Ltd.\""
     },
     "shortName": {
       "type": "string",
