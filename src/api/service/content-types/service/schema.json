@@ -42,6 +42,13 @@
       "required": true,
       "default": "#3B82F6",
       "description": "Icon badge and accent color for this service"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "Optional banner photo shown on the service card — falls back to the icon badge when unset"
     }
   }
 }
