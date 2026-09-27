@@ -21,7 +21,12 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
           rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
         },
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {
+        min: env.int('DATABASE_POOL_MIN', 1),
+        max: env.int('DATABASE_POOL_MAX', 4),
+        acquireTimeoutMillis: env.int('DATABASE_ACQUIRE_TIMEOUT', 30000),
+        idleTimeoutMillis: env.int('DATABASE_IDLE_TIMEOUT', 30000),
+      },
     },
     postgres: {
       connection: {
@@ -41,7 +46,12 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
         },
         schema: env('DATABASE_SCHEMA', 'public'),
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {
+        min: env.int('DATABASE_POOL_MIN', 1),
+        max: env.int('DATABASE_POOL_MAX', 4),
+        acquireTimeoutMillis: env.int('DATABASE_ACQUIRE_TIMEOUT', 30000),
+        idleTimeoutMillis: env.int('DATABASE_IDLE_TIMEOUT', 30000),
+      },
     },
     sqlite: {
       connection: {
