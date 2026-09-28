@@ -866,6 +866,18 @@ export default {
       return;
     }
 
+    // In production, once the database is already seeded, skip the heavy 20+ migration & backfill queries
+    // to achieve near-instant cold starts (~1.5s instead of ~10s).
+    if (process.env.NODE_ENV === 'production') {
+      const seeded = await strapi.documents('api::product-category.product-category').count({});
+      if (seeded > 0) {
+        strapi.log.info(
+          `[seed] Production database already initialized (${seeded} product categories found). Skipping startup seeder & backfill migrations.`,
+        );
+        return;
+      }
+    }
+
     const seedIfEmpty = async (
       uid:
         | 'api::product-category.product-category'
