@@ -24,18 +24,6 @@ export async function runDatabaseSeed(strapi: Core.Strapi): Promise<void> {
       return;
     }
 
-    // In production, once the database is already seeded, skip the heavy 20+ migration & backfill queries
-    // to achieve near-instant cold starts (~1.5s instead of ~10s).
-    if (process.env.NODE_ENV === 'production') {
-      const seeded = await strapi.documents('api::product-category.product-category').count({});
-      if (seeded > 0) {
-        strapi.log.info(
-          `[seed] Production database already initialized (${seeded} product categories found). Skipping startup seeder & backfill migrations.`,
-        );
-        return;
-      }
-    }
-
     const seedIfEmpty = async (
       uid:
         | 'api::product-category.product-category'
@@ -45,7 +33,8 @@ export async function runDatabaseSeed(strapi: Core.Strapi): Promise<void> {
         | 'api::blog-post.blog-post'
         | 'api::testimonial.testimonial'
         | 'api::office.office'
-        | 'api::reason.reason',
+        | 'api::reason.reason'
+        | 'api::hero-slide.hero-slide',
       data: Record<string, unknown>[],
       label: string,
     ) => {
@@ -60,16 +49,26 @@ export async function runDatabaseSeed(strapi: Core.Strapi): Promise<void> {
           await strapi.documents(uid).create({ data: entry, status: 'published' });
           created++;
         } catch (err) {
-          // One bad entry (transient DB error, bad env at boot) shouldn't
-          // silently leave the collection "non-empty" but incomplete —
-          // logging and continuing at least seeds everything that can
-          // succeed, and surfaces exactly what didn't.
-          strapi.log.warn(`[seed] ${label}: failed to create an entry: ${(err as Error).message}`);
+          strapi.log.warn(`[seed] ${label}: failed to create entry: ${(err as Error).message}`);
         }
       }
-      strapi.log.info(`[seed] ${label}: created ${created}/${data.length}`);
+      strapi.log.info(`[seed] ${label}: seeded ${created}/${data.length} records`);
     };
 
+    // Ensure hero slides collection is seeded even if product categories were already initialized
+    await seedIfEmpty('api::hero-slide.hero-slide', heroSlides, 'hero slides');
+
+    // In production, once the database is already seeded, skip the heavy 20+ migration & backfill queries
+    // to achieve near-instant cold starts (~1.5s instead of ~10s).
+    if (process.env.NODE_ENV === 'production') {
+      const seeded = await strapi.documents('api::product-category.product-category').count({});
+      if (seeded > 0) {
+        strapi.log.info(
+          `[seed] Production database already initialized (${seeded} product categories found). Skipping startup seeder & backfill migrations.`,
+        );
+        return;
+      }
+    }
     // Existing rows predate iconColor (it replaced the old named `gradient`
     // field) — backfill using the same colors those names used to map to,
     // so nothing visually changes until the user picks a new color.
