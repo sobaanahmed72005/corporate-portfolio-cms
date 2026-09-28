@@ -10,6 +10,7 @@ import {
   portfolioCategories,
   stats,
   clientLogos,
+  heroSlides,
 } from './seed-data';
 
 /**
@@ -278,6 +279,7 @@ export async function runDatabaseSeed(strapi: Core.Strapi): Promise<void> {
 
     await seedIfEmpty('api::stat.stat', stats, 'stats');
     await seedIfEmpty('api::client-logo.client-logo', clientLogos, 'client logos');
+    await seedIfEmpty('api::hero-slide.hero-slide' as any, heroSlides, 'hero slides');
 
     // Single type — seed the one entry with today's actual live look, so
     // nothing changes visually until the user edits it themselves.

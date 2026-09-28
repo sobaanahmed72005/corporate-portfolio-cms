@@ -755,3 +755,48 @@ export const stats = [
 export const clientLogos = Array.from({ length: 10 }, (_, i) => ({
   alt: `Client logo placeholder ${i + 1}`,
 }));
+
+export const heroSlides = [
+  {
+    order: 1,
+    imageUrl: '/hero-slides/cctv-security.jpg',
+    alt: 'Full range of CCTV security camera products',
+    headline: 'Complete CCTV Protection',
+    subtext: 'A full range of security camera systems for homes and businesses.',
+  },
+  {
+    order: 2,
+    imageUrl: '/hero-slides/networking.jpg',
+    alt: 'Wireless router connecting devices around a smart home',
+    headline: 'Seamless Connectivity',
+    subtext: 'Enterprise-grade networking gear for homes, offices, and businesses.',
+  },
+  {
+    order: 3,
+    imageUrl: '/hero-slides/laptop-hardware.jpg',
+    alt: 'Laptop hardware and accessories flat lay',
+    headline: 'Upgrade Your Setup',
+    subtext: 'Genuine laptop hardware and accessories to keep you running strong.',
+  },
+  {
+    order: 4,
+    imageUrl: '/hero-slides/multimedia-projectors.jpg',
+    alt: 'Multimedia projector in a corporate meeting room',
+    headline: 'Smart Presentation Solutions',
+    subtext: 'High-quality projectors for meetings, classrooms, and events.',
+  },
+  {
+    order: 5,
+    imageUrl: '/hero-slides/mobile-accessories.jpg',
+    alt: 'Smart mobile accessories built for your lifestyle',
+    headline: 'Smart Accessories',
+    subtext: 'High quality gadgets and accessories you can depend on, every day.',
+  },
+  {
+    order: 6,
+    imageUrl: '/hero-slides/solar-panels.jpg',
+    alt: 'Solar panel field with a city skyline',
+    headline: 'Power Your Future',
+    subtext: 'Reliable solar panels and inverters for homes and businesses across Pakistan.',
+  },
+];
