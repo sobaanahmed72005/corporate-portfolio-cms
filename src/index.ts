@@ -861,6 +861,11 @@ export default {
       strapi.log.warn(`[security] Public role permission check failed: ${(err as Error).message}`);
     }
 
+    if (process.env.SKIP_BOOTSTRAP_SEED === 'true') {
+      strapi.log.info('[seed] SKIP_BOOTSTRAP_SEED is true, skipping database seed and backfill checks');
+      return;
+    }
+
     const seedIfEmpty = async (
       uid:
         | 'api::product-category.product-category'
